@@ -1,0 +1,35 @@
+{% extends "mathtutor/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<div class="alert alert-danger">
+	<p>Your username was entered incorrectly.<br><br>Usernames follow the format firstname.lastname.grade (all lower case); for example if your name is Jane Doe and you are in the 3rd grade, your username would be jane.doe.3.<br>Please try again.<br><br>If you have attempted multiple times with the correct spelling, send an email to <span><a href="mailto:help@chicagomathgame.org">help@chicagomathgame.org</a></span></p>
+    <p>Include in your email:</p>
+    <li>FIRST NAME and LAST NAME</li>
+    <li>USERNAME</li>
+    <li>SCHOOL</li>
+    <li>GRADE</li>
+    <li>TEACHER</li>
+</div>
+{% endif %}
+
+<div class="jumbotron">
+    <h3 style="font-family='Roboto'; font-weight: bold">Please Sign In</h3>
+    <form method='post' action="{% url 'm:login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td id="id_username" data-toggle='tooltip' data-placement="bottom" data-title="Please log in with your username. Usernames follow the format firstname.lastname.grade (all lower case); for example if your name is Jane Doe and you are in the 3rd grade, your username would be jane.doe.3">{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td><input id="id_password" name='password' type='hidden' value='none'></td>
+            </tr>
+        </table>
+        <input type='submit' value="login" />
+        <input type="hidden" value="{{ next }}" />
+    </form>
+</div>
+
+{% endblock %}

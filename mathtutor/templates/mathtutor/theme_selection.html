@@ -1,0 +1,43 @@
+{% extends 'mathtutor/base.html' %}
+{% load staticfiles %}
+{% block content %}
+{% if error %}
+<div class="alert alert-red">
+    <p style="font-size: 1rem">ERROR: Please select a theme!</p>
+</div>
+{% endif %}
+
+<p style="font-size: 1.1rem">To get started, please complete BOTH the Parent Consent form and the Child Assent form at the links below. In order to gain access to the summer math website, both must completed.</p>
+<p style="font-size: 1.1rem">Below you can also choose a theme to make the summer math game more interesting!  Each theme determines what levels you work through, and each comes with fun names for each level.  There are 7 levels for the game, and you complete a level each time you pass off 20 more quizzes.  You can choose a new theme as many times as you want, so one day you can go with Lord of the Rings, the next day you can do My Little Ponies instead, and the next day you can work to become the President of the United States.  It's up to you!</p>
+{% if info.0.status != 1 %}
+<div class="alert btn-danger">
+    <a style="color: white; font-weight: bold" href="http://byu.qualtrics.com/SE/?SID={{ info.0.quizId }}">{{ info.0.title }}: INCOMPLETE - YOU CANNOT CONTINUE ONTO THE SITE UNTIL YOU COMPLETE THIS FORM</a>
+</div>
+{% else %}
+<div class="alert btn-success">
+    <p>{{ info.0.title }}: <span style="font-weight: bold">COMPLETE</span></p>
+</div>
+{% endif %}
+{% if info.1.status != 1 %}
+<div class="alert btn-danger">
+    <a style="color: white; font-weight: bold" href="http://byu.qualtrics.com/SE/?SID={{ info.1.quizId }}" >{{ info.1.title }}: INCOMPLETE - YOU CANNOT CONTINUE ONTO THE SITE UNTIL YOU COMPLETE THIS FORM</a>
+</div>
+{% else %}
+<div class="alert btn-success">
+    <p>Student {{ info.1.title }}: <span style="font-weight: bold">COMPLETE</span></p>
+</div>
+{% endif %}
+
+<div class="alert alert-info">
+<p style="font-size: 1.5rem">Choose a theme for the Summer Math Game:</p>
+<p>You must complete both the parent and student quiz to enter the site with your chosen theme</p>
+<br>
+<form action="{% url 'm:theme_selection' %}", method='post'>
+{% csrf_token %}
+{% for item in form %}
+	<input type='radio' name="theme" value="{{ item.id }}" {% if item.id == user.student.theme.id %}checked {% endif %}> {{ item.name }}<br>
+{% endfor %}
+<input class="submit-btn" type='submit' value="select" style="border-radius: 4px; background-color: white; color: #0950B2; box-shadow: none; border: none; margin-top: 10px; padding: 7px"/>
+</form>
+</div>
+{% endblock %}

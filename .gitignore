@@ -1,4 +1,6 @@
 venv
+staticfiles
 *.pyc
 *~
 *.swp
+

@@ -1,0 +1,23 @@
+{% extends 'mathtutor/base.html' %}
+{% block title %}{{ user.student.theme.name }}<br><span style="font-weight: normal">Your task: {{ user.student.theme.your_task }}</span>{% endblock %}
+{% block content %}
+<div class="thumbnails">
+<div class="row">
+{% for key, value in categories.items %}
+    <div class="col-sm-4">
+        <a href="{% url 'm:quiz_or_practice' key %}"  id="Thumb_{{ key }}" class="thumbnail" style="font-weight: bold;">{{ value }}
+            <hr>
+        <p style="font-weight: normal; line-height: 1em">Quiz Progress</p>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ c.completion }}" aria-valuemin="0" aria-valuemax="{{ c.total }}" style="width: {{ c.completion }}%">
+                {{ c.passed }}
+            </div>
+        </div>
+        <p style="font-weight: normal">Total Quizzes   <span class="custom-badge">{% if c.total == 1 %} 0 {% else %}{{ c.total }}{% endif %}</span></p></a>
+    </div>
+{% endfor %}
+</div>
+
+{% include "mathtutor/includes/reminders.html" %}
+
+{% endblock %}

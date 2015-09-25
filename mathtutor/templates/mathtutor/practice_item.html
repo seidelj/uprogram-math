@@ -1,0 +1,18 @@
+{% extends 'mathtutor/base.html' %}
+{% load staticfiles %}
+{% block title %}{{ category.1 }}{% endblock %}
+{% block content %}
+
+
+<p>{{ learnItem.l_title }}</p>
+{% if learnItem.l_type.name == 'vid' %}
+	<iframe width="560" height="315" src="//www.youtube.com/embed/{{ learnItem.l_path }}?autoplay=1&rel=0" frameborder="0" allowfullscreen></iframe>
+
+{% elif learnItem.l_type.name == 'def' %}
+	<img src="{{ learnItem.get_file_path }}" style="width:435px;"/>
+
+{% else %}
+	<p>Tutorial Item</p>
+
+{% endif %}
+{% endblock %}

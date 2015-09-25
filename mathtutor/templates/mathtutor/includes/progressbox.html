@@ -1,0 +1,47 @@
+{% load staticfiles %}
+{% with progress=user.student.get_overall_progress %}
+    <div class="progress-box">
+        <div class="progress-summary">
+            <div class="progress-header">
+                <h1 style="font-size: 20px; font-family: 'Chelsea Market', cursive;">Your Progress <small style="font-family: 'Roboto'">{{ user.username }}</small></h1>
+                <hr>
+                <div class="quizzes-completed">
+                    <h5>Quizzes Passed</h5>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ agg.passed }}" aria-valuemin="0" aria-valuemax="{{ progress.numberOfQuizes }}" style="width: {{ progress.testCompletion|floatformat:'0' }}%;">
+                            {{ progress.passed }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-stats">
+                <p style="text-align: center; font-size: larger; font-weight: bold;">Level <span id="navbadge" class="badge">{{ user.student.get_theme_info.number }}</span> out of {{ Constants.max_level }}</p>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="contain-progress">
+                            {% if user.student.theme.abbrv != "NONE" %}<p>You are {{ user.student.get_theme_info.article }} <span style="font-weight: bold;">{{ user.student.get_theme_info.description }}</span></p>{% endif %}
+                            <p>{{ user.student.get_theme_info.level_tagline }}</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <img class="img-rounded img-responsive center-block" sytle="max-width: 130px" src="/static/mathtutor/themes/{{ user.student.get_theme_info.image }}.jpg">
+                    </div>
+                </div>
+                <div class="contain-progress">
+                    {% if user.student.theme.abbrv != "NONE" %}
+                    <p style="text-align: center;">
+                    {% if not user.student.get_next_level %}
+                        You've made it to the highest level! Congratulations!
+                    {% else %}
+                        Next level you will be {{ themeInfo.get_next_article.article }} {{ themeInfo.get_next_article.description }}
+                    {% endif %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="themeselect" style="margin-bottom: 20px; margin-top: 8px">
+                <a class="btn btn-success" id="center" href="{% url 'm:theme_selection' %}">Select a new theme<br></a><span class="center-block" style="font-size: smaller;">You can select a new theme as many times as you want!</span>
+            </div>
+        </div>
+    </div>
+{% endwith %}

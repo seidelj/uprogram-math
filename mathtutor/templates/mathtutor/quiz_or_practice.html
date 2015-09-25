@@ -1,0 +1,79 @@
+{% extends 'mathtutor/base.html' %}
+
+{% block title %}{{ category.1 }}{% endblock %}
+{% block content %}
+
+
+<!--<h3>Learning or Earning?</h3>-->
+<div class="panel-group">
+    <div class="panel panel-custom" id="earn">
+        <div class="panel-heading panelHeading">
+            <span class="panel-title" style="font-size: 1.3rem; font-weight: bold;">
+                Click here to take a quiz to be on your way to the next level!
+            </span>
+        </div>
+        <div class="panel-body panelBody" style="display:none;">
+            <ul  class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="{% url 'm:list_quizes' category.0 %}">
+                        Yes! Take me to the Quizzes page
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% if user.student.group != 1 %}
+    <div class="panel panel-custom" id="noearn">
+        <div class="panel-heading panelHeading">
+            <span class="panel-title">
+            Want to brush up on the concepts?
+            </span>
+        </div>
+        <div class="panel-body panelBody" style="display:none;">
+            Yes! I want to learn from:
+            {% if category.0 != 'gen' and category.0 != 'amc' %}
+                <ul class="nav nav-pills nav-stacked">
+                    {% for type in Constants.learnTypes %}
+                    <li>
+                        <a href="{% url 'm:practice' category.0 type.key %}">{{ type.name }}</a>
+                        </li>
+                        {% endfor %}
+                </ul>
+            {% else %}
+            <div class="panel-group">
+                {% for k,v in Constants.categories.items %}
+                {% if k == user.student.group %}
+                {% for key, name in k.items %}
+				{% if key != 'gen' and key != 'amc'  %}
+                <div class='panel panel-custom' id="Thumb_{{ key }}">
+                    <div class='panel-heading panelHeading'>
+                        <span class='panel-title'>{{ name }}</span>
+                    </div>
+                    <div class='panel-body panelBody' style='display:none;'>
+                        <ul class='nav nav-pills nav-stacked'>
+                        {% for type in Constant.learnTypes %}
+                        <li>
+                        <a href="{% url 'm:practice' key type.id %}">{{ type.name }}</a>
+                        </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+				{% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+</div>
+{% endblock %}
+
+<!-- Something for  if category == gen  do we want to list everything OR direct to some index page of categories??  Something to think about for when I get back -JS -->
+
+<script type="text/javascript">
+    $(function () { $('#collapseOne').collapse('show')});
+</script>

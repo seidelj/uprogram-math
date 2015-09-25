@@ -1,0 +1,23 @@
+{% extends 'mathtutor/base.html' %}
+
+{% block title %}{{ category.1 }}{% endblock %}
+{% block content %}
+
+<h3>{{ type_name }}</h3>
+    {% for subCat in learnItems %}
+        {{ subCat.0.l_sub.name }}
+        {% for item in subCat %}
+        <ul id="Thumb_{{ category.0 }}" class="nav nav-pills nav-stacked">
+            <li>
+            {% if item.l_type.name == 'tut' %}
+            <a style="color: white;" href="http://byu.qualtrics.com/SE/?SID={{ item.l_path }}">{{ item.l_title }} <img src='/static/mathtutor/tutorials/{{ item.l_image }}.png' style="width:335px;"></a>
+            {% else %}
+			<a style="color: white;" href="{% url 'm:practice_item' category.0 item.l_type.name item.id %}">{{ item.l_title }}</a>
+			{% endif %}
+			</li>
+
+        </ul>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <title>Math Tutor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.circliful.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chelsea.css' %}">
+    <link rel="stylesheet" href="{% static 'css/roboto.css' %}">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div id="wrap">
+        {% include "mathtutor/includes/topnav.html" %}
+        <div class="container" style="padding-top: 70px; padding-bottom: 30px;">
+            <h2 style="font-family: 'Chelsea Market', cursive;">{% block title %}Chicago Math Tutor{% endblock %}</h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-push-8">
+            {% if user.is_authenticated %}
+                {% include "mathtutor/includes/progressbox.html" %}
+            {% endif %}
+                </div>
+                <div class="col-md-8 col-md-pull-4">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% include "mathtutor/includes/footer.html" %}
+</body>
+<script>
+        $(document).ready(function () {
+            $('.panelHeading').click(function (e) {
+                e.stopPropagation();
+                    var $sliderContent = $(this).next('.panelBody'),
+                        $panelBody = $(this).closest('.panel-group').find('.panel-body');
+                        $panelBody.not($sliderContent.slideToggle("400",changeInnerState)).find('.panel-body:visible').addBack().slideUp();
+             });
+        });
+        function changeInnerState() {
+                    var $this = $(this);
+                    if ($this.is(':hidden')) $this.find('.panel-body').slideUp();
+        }
+</script>
+</html>
