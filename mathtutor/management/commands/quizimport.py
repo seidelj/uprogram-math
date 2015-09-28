@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from mathtutor.models import Quizes, QuizGroup
+from mathtutor.models import Quiz, QuizGroup
 import csv, os
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
@@ -13,10 +13,10 @@ class Command(BaseCommand):
 			mycsv = csv.reader(f)
 			next(mycsv, None) # Skip headers
 			for row in mycsv:
-				new, created = Quizes.objects.get_or_create(q_id=row[0].replace(" ",''))
+				new, created = Quiz.objects.get_or_create(q_id=row[0].replace(" ",''))
 				new.q_name = row[1]
-				new.q_catagory = row[3]
+				new.q_category = row[3]
 				new.save()
 				b, created = QuizGroup.objects.get_or_create(group=row[2])
-				b.quizes_set.add(new)
+				b.quiz_set.add(new)
 		f.close()

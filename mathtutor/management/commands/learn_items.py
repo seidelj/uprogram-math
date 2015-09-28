@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from mathtutor.models import Quizes, QuizGroup,  LearnType, LearnItem, SubCatagory
+from mathtutor.models import Quiz, QuizGroup,  LearnType, LearnItem, SubCategory
 from django.contrib.auth.models import User
 import csv, os
 from codecs import encode
@@ -16,7 +16,7 @@ class Command(BaseCommand):
 			mycsv = csv.reader(f)
 			next(mycsv, None) # Skip the headers
 			for row in mycsv:
-				SubCatagory.objects.get_or_create(name=row[5])
+				SubCategory.objects.get_or_create(name=row[5])
 		f.close()
 		with open(os.path.join(csvDir, 'learn.csv'), 'rb') as f:
 			mycsv = csv.reader(f)
@@ -34,7 +34,7 @@ class Command(BaseCommand):
 				learntype, created = LearnType.objects.get_or_create(name=row[0])
 				learntype.learnitem_set.add(l)
 
-				subcatagory = SubCatagory.objects.get(name=row[5])
-				subcatagory.learnitem_set.add(l)
+				subcategory = SubCategory.objects.get(name=row[5])
+				subcategory.learnitem_set.add(l)
 
 

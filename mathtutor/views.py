@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import auth
-from .models import Constants, Quizes, QuizGroup, SubCatagory, LearnItem, Themes
+from .models import Constants, Quiz, QuizGroup, SubCategory, LearnItem, Theme
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 
@@ -43,7 +43,7 @@ def theme_selection(request):
         {'title': "Tutor Parent Consent", "q_id": "somesrting", "status": user.student.consent},
     ]
 
-    form = Themes.objects.all()
+    form = Theme.objects.all()
     error = False
     if request.method == "POST":
         if 'theme' in request.POST:
@@ -85,7 +85,7 @@ def quiz_or_practice(request, category):
 def list_quizes(request, category):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
-    quizList = quizGroup.quizes_set.filter(q_catagory=category)
+    quizList = quizGroup.quiz_set.filter(q_category=category)
     context = {
         'category': [category, Constants.categories[student.group][category]],
         'quizList': quizList,

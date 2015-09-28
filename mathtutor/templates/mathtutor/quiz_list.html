@@ -1,6 +1,6 @@
 {% extends 'mathtutor/base.html' %}
 
-{% block pageheader %}{{category.1}}{% endblock %}
+{% block title %}{{category.1}}{% endblock %}
 {% block content %}
 <script>
 $(document).ready(function() {
@@ -20,7 +20,7 @@ $(document).ready(function() {
 	        {% if results.attempted %}
             <div class="progress">
                 <div class="progress-bar" {% if results.quizPassed %} id="success" {% else %} id="notsuccess" {% endif %} role="progressbar" aria-valuenow="{{ q.percentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ q.percentage }}%">
-                    {% if not results.quizPassed %}<a style="color: white; font-style: none;" href='http://byu.qualtrics.com/SE/?SID={{ q.id }}'>{% endif %}
+                    {% if not results.quizPassed %}<a style="color: white; font-style: none;" href='http://byu.qualtrics.com/SE/?SID={{ q.q_id }}'>{% endif %}
                     High Score: {{ results.highScore }} / {% if category.0 == 'amc' %}4{% else %}6{% endif %}
                     {% if not results.quizPassed %}</a>{% endif %}
                 </div>
