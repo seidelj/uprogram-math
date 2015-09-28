@@ -67,7 +67,7 @@ class Student(models.Model):
     district = models.CharField("District", max_length=8)
 
     def set_null_theme(self):
-        if not hasattr(self.theme, 'theme'):
+        if not hasattr(self.theme, 'name'):
             self.theme = Themes.objects.get(abbrv="NONE")
             self.save()
 

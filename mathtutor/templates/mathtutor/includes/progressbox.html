@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% with progress=user.student.get_overall_progress %}
+<div class="col-md-4 col-md-push-8">
     <div class="progress-box">
         <div class="progress-summary">
             <div class="progress-header">
@@ -17,13 +18,15 @@
             <div class="progress-stats">
                 <p style="text-align: center; font-size: larger; font-weight: bold;">Level <span id="navbadge" class="badge">{{ user.student.get_theme_info.number }}</span> out of {{ Constants.max_level }}</p>
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-12">
                         <div class="contain-progress">
                             {% if user.student.theme.abbrv != "NONE" %}<p>You are {{ user.student.get_theme_info.article }} <span style="font-weight: bold;">{{ user.student.get_theme_info.description }}</span></p>{% endif %}
                             <p>{{ user.student.get_theme_info.level_tagline }}</p>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
                         <img class="img-rounded img-responsive center-block" sytle="max-width: 130px" src="/static/mathtutor/themes/{{ user.student.get_theme_info.image }}.jpg">
                     </div>
                 </div>
@@ -44,4 +47,5 @@
             </div>
         </div>
     </div>
+</div>
 {% endwith %}

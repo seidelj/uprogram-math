@@ -4,6 +4,10 @@
 <div class="thumbnails">
 <div class="row">
 {% for key, value in categories.items %}
+{% if forloop.counter == 4 %}
+</div>
+<div class="row">
+{% endif %}
     <div class="col-sm-4">
         <a href="{% url 'm:quiz_or_practice' key %}"  id="Thumb_{{ key }}" class="thumbnail" style="font-weight: bold;">{{ value }}
             <hr>
