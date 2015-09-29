@@ -15,7 +15,7 @@
             <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
                 <li class="navbar-text">
-                    {% if user.student.theme.abbrv == "NONE" %}
+                    {% if user.student.theme.abbrv == "NOTHEME" %}
                         You have not selected a theme
                     {% else %}
                         You are {{ user.student.get_theme_info.article }} <span id="navbadge" class="custom-badge">{{ user.student.get_theme_info.description }}</span>

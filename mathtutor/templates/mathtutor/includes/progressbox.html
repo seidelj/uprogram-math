@@ -33,12 +33,14 @@
                 <div class="contain-progress">
                     {% if user.student.theme.abbrv != "NONE" %}
                     <p style="text-align: center;">
-                    {% if not user.student.get_next_level %}
+                    {% with nextRank=user.student.get_next_rank %}
+                    {% if not user.student.get_next_rank %}
                         You've made it to the highest level! Congratulations!
                     {% else %}
-                        Next level you will be {{ themeInfo.get_next_article.article }} {{ themeInfo.get_next_article.description }}
+                        Next level you will be {{ nextRank.article }} <b>{{ nextRank.description }}</b>
                     {% endif %}
                     </p>
+                    {% endwith %}
                     {% endif %}
                 </div>
             </div>

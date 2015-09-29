@@ -100,7 +100,7 @@ class Student(models.Model):
 
     def get_theme_info(self):
         progress = self.get_overall_progress()
-        completionRatio = float(progress['testCompletion'])/progress['numberOfQuizes']
+        completionRatio = float(progress['passed'])/progress['numberOfQuizes']
         for x in range(1,8):
             if completionRatio <= float(x)/Constants.max_level:
                 rank = x
@@ -111,11 +111,11 @@ class Student(models.Model):
             return self.theme.themeinfo_set.get(number=rank)
 
     def get_next_rank(self):
-        currentRank = self.get_theme_info.number
+        currentRank = self.get_theme_info().number
         if currentRank == Constants.max_level:
             return False
         else:
-            return self.theme.themeinfo_set.get(number=rank+1)
+            return self.theme.themeinfo_set.get(number=currentRank+1)
 
 class Quiz(models.Model):
     q_id = models.CharField("Quiz ID", max_length=256)
