@@ -114,4 +114,4 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-LOGIN_REDIRECT_URL = "/dashboard"
+LOGIN_REDIRECT_URL = "/accounts/grid"
