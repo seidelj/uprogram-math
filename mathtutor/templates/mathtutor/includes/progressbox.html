@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="contain-progress">
-                    {% if user.student.theme.abbrv != "NONE" %}
+                    {% if user.student.theme.abbrv != "NOTHEME" %}
                     <p style="text-align: center;">
                     {% with nextRank=user.student.get_next_rank %}
                     {% if not user.student.get_next_rank %}
