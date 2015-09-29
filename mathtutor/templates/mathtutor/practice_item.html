@@ -3,7 +3,7 @@
 {% block title %}{{ category.1 }}{% endblock %}
 {% block content %}
 
-
+<div class="col-md-8 col-md-pull-4">
 <p>{{ learnItem.l_title }}</p>
 {% if learnItem.l_type.name == 'vid' %}
 	<iframe width="560" height="315" src="//www.youtube.com/embed/{{ learnItem.l_path }}?autoplay=1&rel=0" frameborder="0" allowfullscreen></iframe>
@@ -15,4 +15,5 @@
 	<p>Tutorial Item</p>
 
 {% endif %}
+</div>
 {% endblock %}

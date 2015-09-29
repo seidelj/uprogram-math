@@ -1,15 +1,18 @@
 html {
     font-size: 100%;
+    position:relative;
+    min-height:100%;
 }
 
 body {
  background-color: #f1f1ee;
  font-family: 'Roboto', sans-serif;
+ margin-bottom:350px;
 }
 #wrap {
-    padding-bottom: 150px;
+/*    padding-bottom: 150px;
     min-height: 100%;
-    overflow: auto;
+    overflow: auto;*/
 }
 #success {
     /*background-color: #33CC33;*/
@@ -256,9 +259,9 @@ a.thumbnail:hover {
 #footer {
     min-width: 100%;
     background-color: white;
-    height: 350px;
-    margin-top: -100px;
+    position:absolute;
     bottom: 0;
+    height: 350px
 }
 #footer .col-sm-4 img {
      margin-top: 25px;

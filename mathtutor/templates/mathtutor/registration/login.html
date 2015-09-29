@@ -2,6 +2,16 @@
 
 {% block content %}
 
+
+{% if user.is_authenticated %}
+<div class="col-md-8 col-md-pull-4">
+<div class="alert alert-info">
+	<p>You are already logged in</p>
+	<a href="{% url "m:logout" %}" class="btn btn-danger">Logout</a> <a href="{% url 'm:index' %}" class="btn btn-success">Continue</a>
+</div>
+
+{% else %}
+<div class="col-md-8">
 {% if form.errors %}
 <div class="alert alert-danger">
 	<p>Your username was entered incorrectly.<br><br>Usernames follow the format firstname.lastname.grade (all lower case); for example if your name is Jane Doe and you are in the 3rd grade, your username would be jane.doe.3.<br>Please try again.<br><br>If you have attempted multiple times with the correct spelling, send an email to <span><a href="mailto:help@chicagomathgame.org">help@chicagomathgame.org</a></span></p>
@@ -31,5 +41,6 @@
         <input type="hidden" value="{{ next }}" />
     </form>
 </div>
-
+</div>
+{% endif %}
 {% endblock %}

@@ -10,11 +10,10 @@ from django.http import HttpResponseRedirect
 
 @login_required(login_url='/login/')
 def index(request):
-	if request.user.is_authenticated:
-                request.user.student.set_null_theme()
-		return HttpResponseRedirect(reverse('m:dashboard'))
-	else:
-		return render(request, 'login.html',)
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('m:dashboard'))
+    else:
+        return render(request, 'login.html',)
 
 def logout(request):
     auth.logout(request)
@@ -64,6 +63,7 @@ def theme_selection(request):
 
 @login_required
 def dashboard(request):
+    updated = request.user.student.set_null_theme()
     student = request.user.student
     context = {
         'categories':Constants.categories[student.group],
@@ -97,7 +97,7 @@ def practice(request, category, which, itemId=None):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
     learnItems = []
-    for subCategory in SubCatagory.objects.all():
+    for subCategory in SubCategory.objects.all():
         learnItems.append(subCategory.get_list_of_items(quizGroup, category, which))
     context = {
         'category': [category, Constants.categories[student.group][category]],

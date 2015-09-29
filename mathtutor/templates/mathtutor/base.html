@@ -13,23 +13,17 @@
 </head>
 
 <body>
-    <div id="wrap">
         {% include "mathtutor/includes/topnav.html" %}
         <div class="container" style="padding-top: 70px; padding-bottom: 30px;">
             <h2 style="font-family: 'Chelsea Market', cursive;">{% block title %}Chicago Math Tutor{% endblock %}</h2>
-        </div>
-        <div class="container">
             <div class="row">
             {% if user.is_authenticated %}
                 {% include "mathtutor/includes/progressbox.html" %}
             {% endif %}
-                <div class="col-md-8 col-md-pull-4">
-                    {% block content %}
-                    {% endblock %}
-                </div>
+                {% block content %}
+                {% endblock %}
             </div>
         </div>
-    </div>
 {% include "mathtutor/includes/footer.html" %}
 </body>
 <script>

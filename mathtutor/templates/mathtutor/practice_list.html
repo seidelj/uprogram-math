@@ -2,7 +2,7 @@
 
 {% block title %}{{ category.1 }}{% endblock %}
 {% block content %}
-
+<div class="col-md-8 col-md-pull-4">
 <h3>{{ type_name }}</h3>
     {% for subCat in learnItems %}
         {{ subCat.0.l_sub.name }}
@@ -19,5 +19,5 @@
         </ul>
         {% endfor %}
     {% endfor %}
-
+</div>
 {% endblock %}

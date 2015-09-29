@@ -7,11 +7,12 @@ $(document).ready(function() {
 	$('.custom-badge').tooltip();
 	});
 </script>
-<div class="alert alert-gray">
-    <strong>Don't see your latest progress?</strong><br><strong>RANKS AND LEVELS USUALLY TAKE 10MIN TO UPDATE ON THE WEBSITE</strong><br>So don't worry!
-</div>
-{% for quiz in quizList %}
-{% with results=quiz.get_results %}
+<div class="col-md-8 col-md-pull-4">
+	<div class="alert alert-gray">
+    	<strong>Don't see your latest progress?</strong><br><strong>RANKS AND LEVELS USUALLY TAKE 10MIN TO UPDATE ON THE WEBSITE</strong><br>So don't worry!
+	</div>
+	{% for quiz in quizList %}
+	{% with results=quiz.get_results %}
 	<div class="panel panel-custom" id="Thumb_{{ category.0 }}">
 		<div class="panel-heading">
             <a href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>Quiz {{ forloop.counter }}</a>{% if results.quizPassed %}<span id="success" style="float:right;" class="custom-badge" data-toggle='tooltip' data-placement="right" data-title="Passed!"><span class="glyphicon glyphicon-ok" style="padding: 3px;"></span></span>{% endif %}
@@ -37,4 +38,5 @@ $(document).ready(function() {
     </div>
 {% endwith %}
 {% endfor %}
+</div>
 {% endblock %}

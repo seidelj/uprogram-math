@@ -62,15 +62,16 @@ class Student(models.Model):
     treatment = models.CharField('Treatment', max_length=64)
     score = models.CharField('Test Score', max_length=8)
     percentile = models.CharField("Scored Higher", max_length=8)
-    theme = models.OneToOneField('Theme', blank=True, null=True)
+    theme = models.ForeignKey('Theme', blank=True, null=True)
     assent = models.IntegerField('Student Assent', default=0)
     consent = models.IntegerField('Parent Consent', default=0)
     district = models.CharField("District", max_length=8)
 
     def set_null_theme(self):
-        if not hasattr(self.theme, 'name'):
-            self.theme = Theme.objects.get(abbrv="NONE")
-            self.save()
+        if not hasattr(self.theme, 'abbrv'):
+            print "setting null theme"
+            self.theme = Theme.objects.get(abbrv="NOTHEME")
+            self.save(update_fields=['theme'])
 
     def access_date(self):
         pass
@@ -104,8 +105,7 @@ class Student(models.Model):
             if completionRatio <= float(x)/Constants.max_level:
                 rank = x
                 break
-
-        if self.theme.abbrv == "NONE":
+        if self.theme.abbrv == "NOTHEME":
             return self.theme.themeinfo_set.get(number=0)
         else:
             return self.theme.themeinfo_set.get(number=rank)

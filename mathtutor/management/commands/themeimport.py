@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from mathtutor.models import Themes, ThemeInfo
+from mathtutor.models import Theme, ThemeInfo
 import csv, os
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,7 +13,7 @@ class Command(BaseCommand):
             mycsv = csv.reader(f)
             next(mycsv, None) # skip the headers
             for row in mycsv:
-                themes, created = Themes.objects.get_or_create(name=row[0], abbrv=row[1], your_task=row[7])
+                themes, created = Theme.objects.get_or_create(name=row[0], abbrv=row[1], your_task=row[7])
                 info = ThemeInfo(
                     name_id=themes.id,
                     number=row[2],
