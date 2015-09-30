@@ -65,8 +65,22 @@ def theme_selection(request):
 def dashboard(request):
     updated = request.user.student.set_null_theme()
     student = request.user.student
+    categories = []
+    for k, v in Constants.categories[student.group].items():
+        if k == "amc":
+            position = 2
+        elif k == "gen":
+            position = 1
+        else:
+            position = 0
+        categories.append(dict(
+            key=k,
+            name=v,
+            position=position,
+            results=student.get_overall_progress(k),
+        ))
     context = {
-        'categories':Constants.categories[student.group],
+        'categories':sorted(categories, key=lambda k: k['position']),
         "Constants": Constants,
     }
     return render(request, 'mathtutor/dashboard.html', context)

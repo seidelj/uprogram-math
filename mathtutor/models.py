@@ -88,7 +88,7 @@ class Student(models.Model):
         else:
             score = 5 if cat != "amc" else 3
             total = qg.quiz_set.filter(q_category=cat).count()
-            rs = u.result_set.filter(q_category=cat).count()
+            rs = u.result_set.filter(quiz__q_category=cat)
             passed = rs.filter(score__gte=score).order_by('quiz').distinct('quiz').count()
 
         test_completion = 100 * (float(passed/total))

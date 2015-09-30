@@ -4,21 +4,21 @@
 <div class="col-md-8 col-md-pull-4">
 <div class="thumbnails">
 <div class="row">
-{% for key, value in categories.items %}
+{% for category in categories %}
 {% if forloop.counter == 4 %}
 </div>
 <div class="row">
 {% endif %}
     <div class="col-sm-4">
-        <a href="{% url 'm:quiz_or_practice' key %}"  id="Thumb_{{ key }}" class="thumbnail" style="font-weight: bold;">{{ value }}
+        <a href="{% url 'm:quiz_or_practice' category.key %}"  id="Thumb_{{ category.key }}" class="thumbnail" style="font-weight: bold;">{{ category.name }}
             <hr>
         <p style="font-weight: normal; line-height: 1em">Quiz Progress</p>
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ c.completion }}" aria-valuemin="0" aria-valuemax="{{ c.total }}" style="width: {{ c.completion }}%">
-                {{ c.passed }}
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ category.results.testCompletion }}" aria-valuemin="0" aria-valuemax="{{ category.results.numberOfQuizes }}" style="width: {{ category.results.testCompletion }}%">
+                {{ category.results.passed }}
             </div>
         </div>
-        <p style="font-weight: normal">Total Quizzes   <span class="custom-badge">{% if c.total == 1 %} 0 {% else %}{{ c.total }}{% endif %}</span></p></a>
+        <p style="font-weight: normal">Total Quizzes   <span class="custom-badge">{{ category.results.numberOfQuizes }}</span></p></a>
     </div>
 {% endfor %}
 </div>
