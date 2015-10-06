@@ -122,6 +122,7 @@ class Quiz(models.Model):
     q_name = models.CharField("Quiz Name", max_length=256)
     q_group = models.ForeignKey("QuizGroup", blank=True, null=True)
     q_category = models.CharField('Category', max_length=8)
+    site = models.CharField("Website", max_length=16, default='tutor')
 
     def get_results(self, user):
         rs = u.result_set.filter(quiz__q_id=self.q_id)
