@@ -139,22 +139,22 @@ img.theme-img {
     /*modifying bootstrap built in thumbnails */
 .thumbnail {
     border-radius: 20px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 a.thumbnail:focus,
 a.thumbnail:hover {
     border-color: white;
 }
 /* THUMBNAILS */
-#Thumb {
+.Thumb {
 }
 .thumbnails {
 }
 .thumbnails a,
 .thumbnails a:focus,
 .thumbnails a:hover {
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
     color: white;
     text-decoration: none !important;
 }
@@ -163,31 +163,31 @@ a.thumbnail:hover {
 .thumbnails a:hover {
     text-decoration: underline;
 }
-#Thumb_md , #Thumb_mp, #Thumb_ee {
+.Thumb_md , .Thumb_mp, .Thumb_ee {
     background-color: #FFC32B;
 }
-#Thumb_nof, #Thumb_fpr, #Thumb_pr {
+.Thumb_nof, .Thumb_fpr, .Thumb_pr {
     background-color: #4BAE7F;
 }
-#Thumb_nobt, #Thumb_ns {
+.Thumb_nobt, .Thumb_ns {
     background-color: #464DC2;
 }
 
-#Thumb_geom {
+.Thumb_geom {
     background-color: #D94371;
 }
 
-#Thumb_oat, #Thumb_eat, #Thumb_sp {
+.Thumb_oat, .Thumb_eat, .Thumb_sp {
     background-color: #9B6DCF;
 }
 
-#Thumb_gen {
+.Thumb_gen {
     /*background-color: #C16622;*/
     background-color: #FF8b3e;
 }
-#Thumb_amc {
+.Thumb_amc {
     border-color: #7ed538;
-    color: #7ed538;
+    color: #7ed538 !important;
     background-color: black;
 }
 .thumbnail .progress {
@@ -225,25 +225,25 @@ a.thumbnail:hover {
 .panel-custom .panel-heading {
     color: white;
 }
-#Thumb_md, #Thumb_mp, #Thumb_ee .panel-custom .panel-heading {
+.Thumb_md, .Thumb_mp, .Thumb_ee .panel-custom .panel-heading {
     background-color: #FFC32B;
 }
-#Thumb_nof, #Thumb_fpr, #Thumb_pr .panel-custom .panel-heading {
+.Thumb_nof, .Thumb_fpr, .Thumb_pr .panel-custom .panel-heading {
     background-color: #4BAE7F;
 }
-#Thumb_nobt, #Thumb_ns .panel-custom .panel-heading {
+.Thumb_nobt, .Thumb_ns .panel-custom .panel-heading {
     background-color: #464DC2;
 }
 
-#Thumb_geom .panel-custom > .panel-heading {
+.Thumb_geom .panel-custom > .panel-heading {
     background-color: #D94371;
 }
 
-#Thumb_oat, #Thumb_eat, #Thumb_sp .panel-custom > .panel-heading {
+.Thumb_oat, .Thumb_eat, .Thumb_sp .panel-custom > .panel-heading {
     background-color: #9B6DCF;
 }
 
-#Thumb_gen .panel-custom > .panel-heading {
+.Thumb_gen .panel-custom > .panel-heading {
     /*background-color: #C16622;*/
 }
 

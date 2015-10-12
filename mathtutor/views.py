@@ -5,7 +5,9 @@ from django.contrib import auth
 from .models import Constants, Quiz, QuizGroup, SubCategory, LearnItem, Theme
 from django.utils import timezone
 from django.http import HttpResponseRedirect
+from mathtutor.decorators import check_category_access
 
+constants = Constants()
 # Create your views here.
 
 @login_required(login_url='/login/')
@@ -35,11 +37,12 @@ def noaccess(request):
     else:
         return HttpResponseRedirect(reverse('m:index'))
 
+@login_required
 def theme_selection(request):
     user = request.user
     assent_and_consent = [
         {'title': "Tutor Child Assent", 'q_id': "somestring", 'status': user.student.assent},
-        {'title': "Tutor Parent Consent", "q_id": "somesrting", "status": user.student.consent},
+        {'title': "Tutor Parent Consent", "q_id": "somestring", "status": user.student.consent},
     ]
 
     form = Theme.objects.all()
@@ -65,22 +68,11 @@ def theme_selection(request):
 def dashboard(request):
     updated = request.user.student.set_null_theme()
     student = request.user.student
-    categories = []
-    for k, v in Constants.categories[student.group].items():
-        if k == "amc":
-            position = 2
-        elif k == "gen":
-            position = 1
-        else:
-            position = 0
-        categories.append(dict(
-            key=k,
-            name=v,
-            position=position,
-            results=student.get_overall_progress(k),
-        ))
+    categories = Constants.categories[student.group]
+    for c in categories:
+        c['results']=student.get_overall_progress(c['key'])
     context = {
-        'categories':sorted(categories, key=lambda k: k['position']),
+        'categories': zip(constants.accessBools(), categories),
         "Constants": Constants,
     }
     return render(request, 'mathtutor/dashboard.html', context)
@@ -88,25 +80,31 @@ def dashboard(request):
 def post_surveys(request):
 	pass
 
+@login_required
+@check_category_access
 def quiz_or_practice(request, category):
     student = request.user.student
     context = {
-        'category': [ category, Constants.categories[student.group][category] ],
+        'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'Constants': Constants,
     }
     return render(request, 'mathtutor/quiz_or_practice.html', context)
 
+@login_required
+@check_category_access
 def list_quizes(request, category):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
     quizList = quizGroup.quiz_set.filter(q_category=category)
     context = {
-        'category': [category, Constants.categories[student.group][category]],
+        'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'quizList': quizList,
         "Constants": Constants,
     }
     return render(request, "mathtutor/quiz_list.html", context)
 
+@login_required
+@check_category_access
 def practice(request, category, which, itemId=None):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
@@ -114,7 +112,7 @@ def practice(request, category, which, itemId=None):
     for subCategory in SubCategory.objects.all():
         learnItems.append(subCategory.get_list_of_items(quizGroup, category, which))
     context = {
-        'category': [category, Constants.categories[student.group][category]],
+        'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'learnItems': learnItems,
         "Constants": Constants,
         }

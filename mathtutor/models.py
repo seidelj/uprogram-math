@@ -10,7 +10,19 @@ class Constants:
 
     max_level = 7
 
+    start_date = timezone.make_aware(datetime.datetime(2015, 10, 5, 8, 00), timezone.get_current_timezone())
+
     investment_time = datetime.timedelta(days=9, hours=7, minutes=59)
+
+    def accessBools(self):
+        today = timezone.make_aware(datetime.datetime.now(), timezone.get_current_timezone())
+        boolList = []
+        for x in range(5):
+            lower = self.start_date + (timezone.timedelta(7) * x)
+            upper = self.start_date + (timezone.timedelta(7) * (x+1))
+            boolList.append(dict(available=lower <= today, date=lower))
+        boolList.append(dict(available=True, date=today))
+        return boolList
 
     learnTypes = [
         dict(key='def', name='Math Glossary' ),
@@ -43,16 +55,26 @@ class Constants:
             'geom': 'Geometry',
             'gen': 'General',
         },
-        25:{
-            'ee':  'Expressions and Equations',
-            'gen': 'General',
-            'geom':'Geometry',
-            'ns':  'Number System',
-            'pr':  'Proportions and Relationships',
-            'sp':  'Probability and Statistics',
-            'amc': "BRAIN BENDERS",
-        },
+        25:[
+            dict(key='ns', name='Number System'),
+            dict(key='ee', name='Expressions and Equations'),
+            dict(key='pr', name='Proportions and Relationships'),
+            dict(key='geom', name='Geometry'),
+            dict(key='sp', name='Probability and Statistics'),
+            dict(key='amc', name="BRAIN BENDERS"),
+        ],
     }
+
+    def check_access(self, group, category):
+        x = 0
+        for item in self.categories[group]:
+            if item['key'] == category:
+                break
+            else:
+                x+=1
+        return self.accessBools()[x]['available']
+
+
 
 
 class Student(models.Model):

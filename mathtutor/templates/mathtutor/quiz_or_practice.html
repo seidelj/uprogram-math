@@ -1,6 +1,6 @@
 {% extends 'mathtutor/base.html' %}
 
-{% block title %}{{ category.1 }}{% endblock %}
+{% block title %}{{ category.0.name }}{% endblock %}
 {% block content %}
 
 <div class="col-md-8 col-md-pull-4">
@@ -15,7 +15,7 @@
         <div class="panel-body panelBody" style="display:none;">
             <ul  class="nav nav-pills nav-stacked">
                 <li>
-                    <a href="{% url 'm:list_quizes' category.0 %}">
+                    <a href="{% url 'm:list_quizes' category.0.key %}">
                         Yes! Take me to the Quizzes page
                     </a>
                 </li>
@@ -24,6 +24,7 @@
     </div>
 
 {% if user.student.group != 1 %}
+    {% if category.0.key != 'gen' and category.0.key != 'amc' %}
     <div class="panel panel-custom" id="noearn">
         <div class="panel-heading panelHeading">
             <span class="panel-title">
@@ -32,15 +33,15 @@
         </div>
         <div class="panel-body panelBody" style="display:none;">
             Yes! I want to learn from:
-            {% if category.0 != 'gen' and category.0 != 'amc' %}
                 <ul class="nav nav-pills nav-stacked">
                     {% for type in Constants.learnTypes %}
                     <li>
-                        <a href="{% url 'm:practice' category.0 type.key %}">{{ type.name }}</a>
+                        <a href="{% url 'm:practice' category.0.key type.key %}">{{ type.name }}</a>
                         </li>
                         {% endfor %}
                 </ul>
-            {% else %}
+        {% endif %}
+<!--
             <div class="panel-group">
                 {% for k,v in Constants.categories.items %}
                 {% if k == user.student.group %}
@@ -54,7 +55,7 @@
                         <ul class='nav nav-pills nav-stacked'>
                         {% for type in Constants.learnTypes %}
                         <li>
-                        <a href="{% url 'm:practice' key type.key %}">{{ type.name }}</a>
+                        <a href="{# url 'm:practice' key type.key #}">{{ type.name }}</a>
                         </li>
                         {% endfor %}
                         </ul>
@@ -65,7 +66,7 @@
 				{% endif %}
                 {% endfor %}
             </div>
-            {% endif %}
+-->
         </div>
     </div>
 {% endif %}
