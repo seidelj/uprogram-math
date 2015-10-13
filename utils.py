@@ -3,7 +3,7 @@ import os, json
 from parserclasses import ResponseParser
 
 # ADD ADDITIONAL QUERY PARAM FOR SITE
-URL = 'https://mathgame-chicago.herokuapp.com/results/'
+URL = 'https://mathgame-chicago.herokuapp.com/results?site=tutor'
 
 
 def get_response():

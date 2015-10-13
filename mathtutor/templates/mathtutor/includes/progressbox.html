@@ -17,6 +17,12 @@
             </div>
             <div class="progress-stats">
                 <p style="text-align: center; font-size: larger; font-weight: bold;">Level <span id="navbadge" class="badge">{{ user.student.get_theme_info.number }}</span> out of {{ Constants.max_level }}</p>
+                {% if user.student.get_theme_info.number == 6 %}
+                <div class="alert alert-info alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    You are almost a math wiz! In order to make it to the final level you need pass atleast 5 BRAIN BENDERS!
+                </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="contain-progress">
@@ -36,10 +42,11 @@
                     {% with nextRank=user.student.get_next_rank %}
                     {% if not user.student.get_next_rank %}
                         You've made it to the highest level! Congratulations!
+                    </p>
                     {% else %}
                         Next level you will be {{ nextRank.article }} <b>{{ nextRank.description }}</b>
-                    {% endif %}
                     </p>
+                    {% endif %}
                     {% endwith %}
                     {% endif %}
                 </div>

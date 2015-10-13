@@ -124,9 +124,13 @@ class Student(models.Model):
         progress = self.get_overall_progress()
         completionRatio = float(progress['passed'])/progress['numberOfQuizes']
         for x in range(1,8):
-            if completionRatio <= float(x)/Constants.max_level:
+            numerator = 4 + (x-1) * 4
+            if completionRatio < float(numerator)/progress['numberOfQuizes']:
                 rank = x
                 break
+        if rank == Constants.max_level:
+            if self.get_overall_progress(cat='amc')['passed'] < 5:
+                rank -= 1
         if self.theme.abbrv == "NOTHEME":
             return self.theme.themeinfo_set.get(number=0)
         else:
