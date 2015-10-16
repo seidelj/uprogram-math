@@ -9,7 +9,7 @@
                 <div class="quizzes-completed">
                     <h5>Quizzes Passed</h5>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ agg.passed }}" aria-valuemin="0" aria-valuemax="{{ progress.numberOfQuizes }}" style="width: {{ progress.testCompletion|floatformat:'0' }}%;">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress.passed }}" aria-valuemin="0" aria-valuemax="{{ progress.numberOfQuizes }}" style="width: {{ progress.testCompletion|floatformat:'0' }}%;">
                             {{ progress.passed }}
                         </div>
                     </div>

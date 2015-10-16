@@ -20,7 +20,7 @@
                 {{ category.1.results.passed }}
             </div>
         </div>
-        <p style="font-weight: normal">Total Quizzes  <span class="custom-badge">{{ category.1.results.numberOfQuizes }}</span></p>{% if category.0 %}</a>{% else %}</span>{% endif %}
+        <p style="font-weight: normal">Total Quizzes <span class="badge">{{ category.1.results.numberOfQuizes }}</span></p>{% if category.0 %}</a>{% else %}</span>{% endif %}
         {% else %}
         <p style="color: #ff2f2f; font-style: italic; font-weight:lighter;">This item will be available starting:</p>
         <p style="color: #ff2f2f;">{{ category.0.date|date:"D, M j" }} at {{ category.0.date|date:"P" }}</p>

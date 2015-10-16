@@ -1,5 +1,7 @@
 import urllib2
 import os, json
+import website.wsgi
+from mathtutor.models import Result
 from parserclasses import ResponseParser
 
 # ADD ADDITIONAL QUERY PARAM FOR SITE
@@ -29,7 +31,7 @@ def main():
                 print obj
             else:
                 blkUpdateList.append(obj)
-        print blkUpdateList
+        Result.objects.bulk_create(blkUpdateList)
 
 
 
