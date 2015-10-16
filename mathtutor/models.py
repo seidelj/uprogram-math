@@ -16,12 +16,12 @@ class Constants:
         '000': timezone.make_aware(datetime.datetime(2015, 1, 1, 8, 00), timezone.get_current_timezone()),
     }
 
-    def accessBools(self, group):
+    def accessBools(self, district):
         today = timezone.make_aware(datetime.datetime.now(), timezone.get_current_timezone())
         boolList = []
         for x in range(5):
-            lower = self.start_date[group] + (timezone.timedelta(7) * x)
-            upper = self.start_date[group] + (timezone.timedelta(7) * (x+1))
+            lower = self.start_date[district] + (timezone.timedelta(7) * x)
+            upper = self.start_date[district] + (timezone.timedelta(7) * (x+1))
             boolList.append(dict(available=lower <= today, date=lower))
         boolList.append(dict(available=True, date=today))
         return boolList
@@ -67,14 +67,14 @@ class Constants:
         ],
     }
 
-    def check_access(self, group, category):
+    def check_access(self, group, district, category):
         x = 0
         for item in self.categories[group]:
             if item['key'] == category:
                 break
             else:
                 x+=1
-        return self.accessBools(goup)[x]['available']
+        return self.accessBools(district)[x]['available']
 
 
 class Student(models.Model):
@@ -96,7 +96,7 @@ class Student(models.Model):
             self.save(update_fields=['theme'])
 
     def access_date(self):
-        return Constants.start_date[self.group]
+        return Constants.start_date[self.district]
 
     def get_overall_progress(self, cat=None):
         u = User.objects.get(id=self.stuid_id)

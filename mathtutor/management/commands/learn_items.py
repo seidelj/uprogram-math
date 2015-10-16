@@ -26,7 +26,7 @@ class Command(BaseCommand):
 				LearnItem.objects.filter(id=new.id).update(l_title=row[3], l_image=row[6])
 				l = LearnItem.objects.get(id=new.id)
 
-				quizgroup = QuizGroup.objects.get(group=row[1])
+				quizgroup, created = QuizGroup.objects.get_or_create(group=row[1])
 				quizgroup.learnitem_set.add(l)
 
 				self.stdout.write("%s" % row[0])
