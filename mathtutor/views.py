@@ -95,7 +95,15 @@ def quiz_or_practice(request, category):
 def list_quizes(request, category):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
-    quizList = quizGroup.quiz_set.filter(q_category=category)
+    quizListObjects = quizGroup.quiz_set.filter(q_category=category)
+    quizList = quizListObjects.values()
+    for quizObj in quizListObjects:
+        results = quizObj.get_results(request.user)
+        name = quizObj.get_display_name()
+        quiz = filter(lambda q: q['q_id']==quizObj.q_id, quizList)[0]
+        quiz['display_name'] = name
+        quiz['results'] = results
+
     context = {
         'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'quizList': quizList,

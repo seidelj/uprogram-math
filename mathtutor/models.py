@@ -160,19 +160,20 @@ class Quiz(models.Model):
         return name
 
     def get_results(self, user):
-        rs = u.result_set.filter(quiz__q_id=self.q_id)
+        rs = user.result_set.filter(quiz__q_id=self.q_id)
         if rs.count() > 0:
+            score_list = []
             for r in rs:
                 score_list.append(encode(r.score, 'utf-8'))
                 score_list.sort(reverse=True)
-                attempted = True
-                highScore = int(score_list[0])
-                percentScore = 100 * (float(score) / 6)
-                attempts = rs.count()
-                if score >= 5:
-                    quizPassed = True
-                else:
-                    quizPassed = False
+            attempted = True
+            highScore = int(score_list[0])
+            percentScore = 100 * (float(highScore) / 6)
+            attempts = rs.count()
+            if highScore >= 5:
+                quizPassed = True
+            else:
+                quizPassed = False
         else:
             attempted = False
             highScore = False
@@ -185,6 +186,7 @@ class Quiz(models.Model):
             highScore=highScore,
             percentScore=percentScore,
             attempts=attempts,
+            quizPassed=quizPassed,
         )
 
 class QuizGroup(models.Model):
