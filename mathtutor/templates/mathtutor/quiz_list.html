@@ -15,7 +15,7 @@ $(document).ready(function() {
 	{% with results=quiz.get_results %}
 	<div class="Thumb_{{ category.0.key }} panel panel-custom">
 		<div class="panel-heading">
-            <a href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>Quiz {{ forloop.counter }}</a>{% if results.quizPassed %}<span id="success" style="float:right;" class="custom-badge" data-toggle='tooltip' data-placement="right" data-title="Passed!"><span class="glyphicon glyphicon-ok" style="padding: 3px;"></span></span>{% endif %}
+            <a href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>{% if not quiz.get_display_name %}Quiz {{ forloop.counter }}{% else %}{{ quiz.get_display_name }}{% endif %}</a>{% if results.quizPassed %}<span id="success" style="float:right;" class="custom-badge" data-toggle='tooltip' data-placement="right" data-title="Passed!"><span class="glyphicon glyphicon-ok" style="padding: 3px;"></span></span>{% endif %}
         </div>
         <div class="panel-body">
 	        {% if results.attempted %}

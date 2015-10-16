@@ -72,7 +72,7 @@ def dashboard(request):
     for c in categories:
         c['results']=student.get_overall_progress(c['key'])
     context = {
-        'categories': zip(constants.accessBools(), categories),
+        'categories': zip(constants.accessBools(student.group), categories),
         "Constants": Constants,
     }
     return render(request, 'mathtutor/dashboard.html', context)

@@ -10,16 +10,18 @@ class Constants:
 
     max_level = 7
 
-    start_date = timezone.make_aware(datetime.datetime(2015, 10, 5, 8, 00), timezone.get_current_timezone())
+    start_date = {
+        '170': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
+        '153': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
+        '000': timezone.make_aware(datetime.datetime(2015, 1, 1, 8, 00), timezone.get_current_timezone()),
+    }
 
-    investment_time = datetime.timedelta(days=9, hours=7, minutes=59)
-
-    def accessBools(self):
+    def accessBools(self, group):
         today = timezone.make_aware(datetime.datetime.now(), timezone.get_current_timezone())
         boolList = []
         for x in range(5):
-            lower = self.start_date + (timezone.timedelta(7) * x)
-            upper = self.start_date + (timezone.timedelta(7) * (x+1))
+            lower = self.start_date[group] + (timezone.timedelta(7) * x)
+            upper = self.start_date[group] + (timezone.timedelta(7) * (x+1))
             boolList.append(dict(available=lower <= today, date=lower))
         boolList.append(dict(available=True, date=today))
         return boolList
@@ -72,9 +74,7 @@ class Constants:
                 break
             else:
                 x+=1
-        return self.accessBools()[x]['available']
-
-
+        return self.accessBools(goup)[x]['available']
 
 
 class Student(models.Model):
@@ -96,7 +96,7 @@ class Student(models.Model):
             self.save(update_fields=['theme'])
 
     def access_date(self):
-        pass
+        return Constants.start_date[self.group]
 
     def get_overall_progress(self, cat=None):
         u = User.objects.get(id=self.stuid_id)
@@ -124,7 +124,7 @@ class Student(models.Model):
         progress = self.get_overall_progress()
         completionRatio = float(progress['passed'])/progress['numberOfQuizes']
         for x in range(1,8):
-            numerator = 4 + (x-1) * 4
+            numerator = 3 + (x-1) * 3
             if completionRatio < float(numerator)/progress['numberOfQuizes']:
                 rank = x
                 break
@@ -149,6 +149,15 @@ class Quiz(models.Model):
     q_group = models.ForeignKey("QuizGroup", blank=True, null=True)
     q_category = models.CharField('Category', max_length=8)
     site = models.CharField("Website", max_length=16, default='tutor')
+
+    def get_display_name(self):
+        if '_G2_' in self.q_name:
+            name = "Beginner"
+        elif '_G3_' in self.q_name:
+            name = "Intermediate"
+        else:
+            name = False
+        return name
 
     def get_results(self, user):
         rs = u.result_set.filter(quiz__q_id=self.q_id)
