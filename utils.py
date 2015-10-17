@@ -1,6 +1,7 @@
 import urllib2
 import os, json
 import website.wsgi
+import datetime
 from mathtutor.models import Result
 from parserclasses import ResponseParser
 
@@ -18,6 +19,7 @@ def get_response():
         return False
 
 def main():
+    print "Begin: {}".format(datetime.datetime.now())
     response = get_response()
     if not response:
         print "Response was not 200"
@@ -28,11 +30,11 @@ def main():
         for item in data['results']:
             created, obj = parser.parse_response(item)
             if not created:
-                print obj
+                pass
             else:
                 blkUpdateList.append(obj)
         Result.objects.bulk_create(blkUpdateList)
-
+    print "Finished updating results: {}".format(datetime.datetime.now())
 
 
 if __name__ == "__main__":
