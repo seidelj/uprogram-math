@@ -22,7 +22,7 @@ $(document).ready(function() {
             <div class="progress">
                 <div class="progress-bar" {% if results.quizPassed %} id="success" {% else %} id="notsuccess" {% endif %} role="progressbar" aria-valuenow="{{ results.percentScore }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ results.percentScore }}%">
                     {% if not results.quizPassed %}<a style="color: white; font-style: none;" href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>{% endif %}
-                    High Score: {{ results.highScore }} / {% if category.0 == 'amc' %}4{% else %}6{% endif %}
+                    High Score: {{ results.highScore }} / {% if category.0.key == 'amc' %}4{% else %}6{% endif %}
                     {% if not results.quizPassed %}</a>{% endif %}
                 </div>
             </div>

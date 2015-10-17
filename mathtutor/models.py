@@ -168,9 +168,11 @@ class Quiz(models.Model):
                 score_list.sort(reverse=True)
             attempted = True
             highScore = int(score_list[0])
-            percentScore = 100 * (float(highScore) / 6)
+            numberOfQuestions = 6 if self.q_category != "amc" else 4
+            percentScore = 100 * (float(highScore) / numberOfQuestions)
             attempts = rs.count()
-            if highScore >= 5:
+            scoreNeeded = 5 if self.q_category != "amc" else 3
+            if highScore >= scoreNeeded:
                 quizPassed = True
             else:
                 quizPassed = False
