@@ -4,4 +4,4 @@ staticfiles
 *.pyc
 *~
 *.swp
-
+access.csv

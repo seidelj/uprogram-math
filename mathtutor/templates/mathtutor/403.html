@@ -1,0 +1,8 @@
+{% extends 'mathtutor/base.html' %}
+
+{% block pageheader %}403: Authentication error.{% endblock %}
+{% block content %}
+
+<p>This error is typically a result of trying to log in while the person using the computer before you hasn't signed out.  Try pressing the back button or return <a href='/'>Home</a>.  If a user that is not you is still logged in, log them out and try again.</p>
+
+{% endblock %}
