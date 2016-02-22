@@ -5,3 +5,5 @@ staticfiles
 *~
 *.swp
 access.csv
+.DS_Store
+

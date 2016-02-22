@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import auth
-from .models import Constants, Quiz, QuizGroup, SubCategory, LearnItem, Theme
+from .models import Constants, Quiz, QuizGroup, SubCategory, LearnItem
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 from mathtutor.decorators import check_category_access
@@ -38,39 +38,12 @@ def noaccess(request):
         return HttpResponseRedirect(reverse('m:index'))
 
 @login_required
-def theme_selection(request):
-    user = request.user
-    assent_and_consent = [
-        {'title': "Tutor Child Assent", 'q_id': "somestring", 'status': user.student.assent},
-        {'title': "Tutor Parent Consent", "q_id": "somestring", "status": user.student.consent},
-    ]
-
-    form = Theme.objects.all()
-    error = False
-    if request.method == "POST":
-        if 'theme' in request.POST:
-            user.student.theme_id = request.POST['theme']
-            user.student.save()
-            return HttpResponseRedirect(reverse('m:dashboard'))
-        else:
-            error = True
-
-    context = {
-        'username': request.user.username,
-        'form': form,
-        'info': assent_and_consent,
-        'error': error,
-        "Constants": Constants,
-    }
-    return render(request, 'mathtutor/theme_selection.html', context)
-
-@login_required
 def dashboard(request):
     updated = request.user.student.set_null_theme()
     student = request.user.student
     categories = Constants.categories[student.group]
     for c in categories:
-        c['results']=student.get_overall_progress(c['key'])
+        c['results']=student.get_quiz_progress(c['key'])
     context = {
         'categories': zip(constants.accessBools(student.district), categories),
         "Constants": Constants,

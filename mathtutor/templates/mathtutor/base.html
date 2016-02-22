@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <head>
-    <title>Math Tutor</title>
+    <title>UProgram Math</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -15,7 +15,7 @@
 <body>
         {% include "mathtutor/includes/topnav.html" %}
         <div class="container" style="padding-top: 70px; padding-bottom: 30px;">
-            <h2 style="font-family: 'Chelsea Market', cursive;">{% block title %}Chicago Math Tutor{% endblock %}</h2>
+            <h2 style="font-family: 'Chelsea Market', cursive;">{% block title %}UProgram Math{% endblock %}</h2>
             <div class="row">
             {% if user.is_authenticated %}
                 {% include "mathtutor/includes/progressbox.html" %}

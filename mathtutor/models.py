@@ -8,13 +8,17 @@ from django.utils import timezone
 
 class Constants:
 
-    max_level = 7
-
     start_date = {
         '170': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
         '153': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
         '000': timezone.make_aware(datetime.datetime(2015, 1, 1, 8, 00), timezone.get_current_timezone()),
     }
+
+    contracts = [
+        {'base': 15, 'marginal': .75},
+        {'base': 10, 'marginal': 1.0},
+        {'base': 5, 'marginal': 1.25},
+    ]
 
     def accessBools(self, district):
         today = timezone.make_aware(datetime.datetime.now(), timezone.get_current_timezone())
@@ -98,7 +102,7 @@ class Student(models.Model):
     def access_date(self):
         return Constants.start_date[self.district]
 
-    def get_overall_progress(self, cat=None):
+    def get_quiz_progress(self, cat=None):
         u = User.objects.get(id=self.stuid_id)
         qg = QuizGroup.objects.get(group=str(self.group))
         if cat == None:
@@ -120,28 +124,19 @@ class Student(models.Model):
             passed=passed,
         )
 
-    def get_theme_info(self):
-        progress = self.get_overall_progress()
-        completionRatio = float(progress['passed'])/progress['numberOfQuizes']
-        for x in range(1,8):
-            numerator = 3 + (x-1) * 3
-            if completionRatio < float(numerator)/progress['numberOfQuizes']:
-                rank = x
-                break
-        if rank == Constants.max_level:
-            if self.get_overall_progress(cat='amc')['passed'] < 5:
-                rank -= 1
-        if self.theme.abbrv == "NOTHEME":
-            return self.theme.themeinfo_set.get(number=0)
-        else:
-            return self.theme.themeinfo_set.get(number=rank)
 
-    def get_next_rank(self):
-        currentRank = self.get_theme_info().number
-        if currentRank == Constants.max_level:
-            return False
-        else:
-            return self.theme.themeinfo_set.get(number=currentRank+1)
+    def get_wage_rate(self):
+        return Constants.contracts[int(self.treatment)-1]
+
+    def get_wage_info(self):
+        quizes = QuizGroup.objects.get(group=str(self.group))
+        numberOfQuizes = quizes.quizes_set.filter(site='math').count()
+        rate = self.get_wage_rate()
+        possibleWage = rate['base'] + float(numberOfQuizes) * rate['marginal']
+        quiz_progress = self.get_quiz_progress()
+        earnedWage = rate['base'] + quiz_progress['passed'] * rate['marginal']
+        wageCompletion = 100 * float(earnedWage)/possibleWage
+        return dict(earned=earnedWage, completion=wageCompletion)
 
 class Quiz(models.Model):
     q_id = models.CharField("Quiz ID", max_length=256)
@@ -234,26 +229,6 @@ class Consent(models.Model):
     teacher = models.CharField("Child's Teacher", max_length=256)
     guardian = models.CharField("Name of Parent/Guardian", max_length=256)
     timestamp = models.DateTimeField("Time", default=get_now)
-
-class Theme(models.Model):
-    name = models.CharField("Name", max_length=256)
-    abbrv = models.CharField("Name Abbrevation", max_length=256)
-    theme_tagline = models.CharField("Theme Tagline", max_length=512)
-    your_task = models.CharField("Your Task", max_length=512)
-
-class ThemeInfo(models.Model):
-    name = models.ForeignKey(Theme)
-    number =models.IntegerField("Level")
-    description = models.CharField("Level Description", max_length=256)
-    image = models.CharField("Image File", max_length=256)
-    level_tagline = models.CharField("Level Tagline", max_length=512)
-    article = models.CharField("Article", max_length=128)
-
-    def get_next_article(self):
-        if self.number == Constants.max_level:
-            return False
-        else:
-            return ThemeInfo.objects.filter(name=self.name).filter(number=self.number+1)
 
 class ConsentForm(ModelForm):
     class meta:
