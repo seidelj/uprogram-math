@@ -223,6 +223,12 @@ class LearnItem(models.Model):
 def get_now():
     return timezone.now()
 
+class ParentFormResult(models.Model):
+    student = models.ForeignKey(User, blank=True, null=True)
+    response_id = models.CharField('Response ID', max_length=256)
+    completeBool = models.IntegerField("Is complete", default=0)
+    qualtrics_id = models.CharField("Qualtrics ID", max_length=256)
+
 class Consent(models.Model):
     child = models.CharField("Child's Name", max_length=256)
     teacher = models.CharField("Child's Teacher", max_length=256)

@@ -39,7 +39,6 @@ def noaccess(request):
 
 @login_required
 def dashboard(request):
-    updated = request.user.student.set_null_theme()
     student = request.user.student
     categories = Constants.categories[student.group]
     for c in categories:
