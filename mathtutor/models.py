@@ -88,7 +88,6 @@ class Student(models.Model):
     treatment = models.CharField('Treatment', max_length=64)
     score = models.CharField('Test Score', max_length=8)
     percentile = models.CharField("Scored Higher", max_length=8)
-    theme = models.ForeignKey('Theme', blank=True, null=True)
     assent = models.IntegerField('Student Assent', default=0)
     consent = models.IntegerField('Parent Consent', default=0)
     district = models.CharField("District", max_length=8)
