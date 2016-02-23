@@ -83,6 +83,9 @@ def list_quizes(request, category):
     }
     return render(request, "mathtutor/quiz_list.html", context)
 
+def parent_survey(request):
+    pass
+
 @login_required
 @check_category_access
 def practice(request, category, which, itemId=None):
