@@ -44,6 +44,7 @@ def dashboard(request):
     for c in categories:
         c['results']=student.get_quiz_progress(c['key'])
     context = {
+        'student': student,
         'categories': zip(constants.accessBools(student.district), categories),
         "Constants": Constants,
     }
@@ -57,6 +58,7 @@ def post_surveys(request):
 def quiz_or_practice(request, category):
     student = request.user.student
     context = {
+        'student': student,
         'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'Constants': Constants,
     }
@@ -75,8 +77,9 @@ def list_quizes(request, category):
         quiz = filter(lambda q: q['q_id']==quizObj.q_id, quizList)[0]
         quiz['display_name'] = name
         quiz['results'] = results
-
+        quiz['url'] = quizObj.get_url()
     context = {
+        'student': student,
         'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'quizList': quizList,
         "Constants": Constants,
@@ -95,6 +98,7 @@ def practice(request, category, which, itemId=None):
     for subCategory in SubCategory.objects.all():
         learnItems.append(subCategory.get_list_of_items(quizGroup, category, which))
     context = {
+        'student': student,
         'category': filter(lambda c: c['key']==category, Constants.categories[student.group]),
         'learnItems': learnItems,
         "Constants": Constants,

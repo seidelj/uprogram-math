@@ -16,6 +16,7 @@ class Command(BaseCommand):
 				new, created = Quiz.objects.get_or_create(q_id=row[0].replace(" ",''))
 				new.q_name = row[1]
 				new.q_category = row[3]
+                                new.site = row[4]
 				new.save()
 				b, created = QuizGroup.objects.get_or_create(group=row[2])
 				b.quiz_set.add(new)

@@ -9,14 +9,14 @@
             </div>
             <div class="money-earned">
                 <h5>Money Earned</h5>
-                {% if agg.passed < 2 %}
+                {% if student.get_quiz_progress.passed < 2 %}
                 <div class="alert alert-warning">
                     <p>You need to pass at least 2 quizzes to start earning money</p>
                 </div>
                 {% else %}
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ agg.wage_completion }}" aria-valueumin="0" aria-valuemax="100" style="width:{{ agg.wage_completion }}%">
-                        ${{ agg.wages|floatformat:2 }}
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ student.get_wage_info.completion }}" aria-valueumin="0" aria-valuemax="100" style="width:{{ student.get_wage_info.completion }}%">
+                        ${{ student.get_wage_info.earned|floatformat:2 }}
                     </div>
                 </div>
                 {% endif %}
@@ -24,8 +24,8 @@
             <div class="quizzes-completed">
                 <h5>Quizzes Passed</h5>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress.passed }}" aria-valuemin="0" aria-valuemax="{{ progress.numberOfQuizes }}" style="width: {{ progress.testCompletion|floatformat:'0' }}%;">
-                        {{ progress.passed }}
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress.passed }}" aria-valuemin="0" aria-valuemax="{{ student.get_quiz_progress.numberOfQuizes }}" style="width: {{ student.get_quiz_progress.testCompletion|floatformat:'0' }}%;">
+                        {{ student.get_quiz_progress.passed }}
                     </div>
                 </div>
             </div>

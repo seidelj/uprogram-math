@@ -20,13 +20,13 @@ $(document).ready(function() {
 	{% with results=quiz.results %}
 	<div class="Thumb_{{ category.0.key }} panel panel-custom">
 		<div class="panel-heading">
-            <a href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>{% if not quiz.display_name %}Quiz {{ forloop.counter }}{% else %}{{ quiz.display_name }}{% endif %}</a>{% if results.quizPassed %}<span id="success" style="float:right;" class="badge" data-toggle='tooltip' data-placement="right" data-title="Passed!"><span class="glyphicon glyphicon-ok" style="padding: 3px;"></span></span>{% endif %}
+            <a href='{{ quiz.url }}'>{% if not quiz.display_name %}Quiz {{ forloop.counter }}{% else %}{{ quiz.display_name }}{% endif %}</a>{% if results.quizPassed %}<span id="success" style="float:right;" class="badge" data-toggle='tooltip' data-placement="right" data-title="Passed!"><span class="glyphicon glyphicon-ok" style="padding: 3px;"></span></span>{% endif %}
         </div>
         <div class="panel-body">
 	        {% if results.attempted %}
             <div class="progress">
                 <div class="progress-bar" {% if results.quizPassed %} id="success" {% else %} id="notsuccess" {% endif %} role="progressbar" aria-valuenow="{{ results.percentScore }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ results.percentScore }}%">
-                    {% if not results.quizPassed %}<a style="color: white; font-style: none;" href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>{% endif %}
+                    {% if not results.quizPassed %}<a style="color: white; font-style: none;" href='{{ quiz.url }}'>{% endif %}
                     High Score: {{ results.highScore }} / {% if category.0.key == 'amc' %}4{% else %}6{% endif %}
                     {% if not results.quizPassed %}</a>{% endif %}
                 </div>
@@ -34,7 +34,7 @@ $(document).ready(function() {
             <p>Attempts: <span {% if results.quizPassed %} id="success" {% endif %} class="badge">{{ results.attempts }}</span>{% if not results.quizPassed %}<span> REMEMBER: You can try a quiz as many times as you need to pass it off{% endif %}</p></span>
 	        {% else %}
                 <div class="alert alert-warning">
-                	<a href='http://byu.qualtrics.com/SE/?SID={{ quiz.q_id }}'>
+                	<a href='{{ quiz.url }}'>
 						You haven't tried this quiz yet, try it now so you can advance a level!
 					</a>
                 </div>

@@ -24,7 +24,6 @@
     </div>
 
 {% if user.student.group != 1 %}
-    {% if category.0.key != 'gen' and category.0.key != 'amc' %}
     <div class="panel panel-custom" id="noearn">
         <div class="panel-heading panelHeading">
             <span class="panel-title">
@@ -33,6 +32,7 @@
         </div>
         <div class="panel-body panelBody" style="display:none;">
             Yes! I want to learn from:
+            {% if category.0.key != 'gen' and category.0.key != 'amc' %}
                 <ul class="nav nav-pills nav-stacked">
                     {% for type in Constants.learnTypes %}
                     <li>
@@ -40,35 +40,35 @@
                         </li>
                         {% endfor %}
                 </ul>
-        {% endif %}
-<!--
-            <div class="panel-group">
-                {% for k,v in Constants.categories.items %}
-                {% if k == user.student.group %}
-                {% for key, name in v.items %}
-				{% if key != 'gen' and key != 'amc'  %}
-                <div class='panel panel-custom' id="Thumb_{{ key }}">
-                    <div class='panel-heading panelHeading'>
-                        <span class='panel-title'>{{ name }}</span>
+                {% else %}
+                <div class="panel-group">
+                    {% for k,v in Constants.categories.items %}
+                    {% if k == user.student.group %}
+                    {% for row in v %}
+            		{% if row.key != 'gen' and row.key != 'amc'  %}
+                    <div class='panel panel-custom Thumb_{{ row.key }}' id="Thumb_{{ row.key }}">
+                        <div class='panel-heading panelHeading'>
+                            <span class='panel-title'>{{ row.name }}</span>
+                        </div>
+                        <div class='panel-body panelBody' style='display:none;'>
+                            <ul class='nav nav-pills nav-stacked'>
+                                {% for type in Constants.learnTypes %}
+                                <li>
+                                    <a href="{% url 'm:practice' row.key type.key %}">{{ type.name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
-                    <div class='panel-body panelBody' style='display:none;'>
-                        <ul class='nav nav-pills nav-stacked'>
-                        {% for type in Constants.learnTypes %}
-                        <li>
-                        <a href="{# url 'm:practice' key type.key #}">{{ type.name }}</a>
-                        </li>
-                        {% endfor %}
-                        </ul>
-                    </div>
-                </div>
                 {% endif %}
                 {% endfor %}
-				{% endif %}
+			    {% endif %}
                 {% endfor %}
             </div>
--->
+            {% endif %}
+
         </div>
-    </div>
+</div>
 {% endif %}
 </div>
 </div>

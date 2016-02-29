@@ -67,7 +67,7 @@ class Constants:
             dict(key='pr', name='Proportions and Relationships'),
             dict(key='geom', name='Geometry'),
             dict(key='sp', name='Probability and Statistics'),
-            dict(key='amc', name="BRAIN BENDERS"),
+            dict(key='gen', name="General"),
         ],
     }
 
@@ -105,15 +105,15 @@ class Student(models.Model):
         u = User.objects.get(id=self.stuid_id)
         qg = QuizGroup.objects.get(group=str(self.group))
         if cat == None:
-            total = qg.quiz_set.all().count()
-            rs = u.result_set.all()
+            total = qg.quiz_set.filter(site="math").count()
+            rs = u.result_set.filter(quiz__site="math")
             passed = rs.exclude(quiz__q_category="amc").filter(score__gte=5).order_by('quiz').distinct('quiz').count()
             brainBendersPassed = rs.filter(quiz__q_category="amc").filter(score__gte=3).order_by('quiz').distinct('quiz').count()
             passed += brainBendersPassed
         else:
             score = 5 if cat != "amc" else 3
-            total = qg.quiz_set.filter(q_category=cat).count()
-            rs = u.result_set.filter(quiz__q_category=cat)
+            total = qg.quiz_set.filter(site="math").filter(q_category=cat).count()
+            rs = u.result_set.filter(quiz__site="math").filter(quiz__q_category=cat)
             passed = rs.filter(score__gte=score).order_by('quiz').distinct('quiz').count()
 
         test_completion = 100 * (float(passed)/total)
@@ -129,20 +129,23 @@ class Student(models.Model):
 
     def get_wage_info(self):
         quizes = QuizGroup.objects.get(group=str(self.group))
-        numberOfQuizes = quizes.quizes_set.filter(site='math').count()
+        numberOfQuizes = quizes.quiz_set.filter(site='math').count()
         rate = self.get_wage_rate()
         possibleWage = rate['base'] + float(numberOfQuizes) * rate['marginal']
         quiz_progress = self.get_quiz_progress()
-        earnedWage = rate['base'] + quiz_progress['passed'] * rate['marginal']
+        if quiz_progress['passed'] < 2:
+            earnedWage = 0
+        else:
+            earnedWage = rate['base'] + quiz_progress['passed'] * rate['marginal']
         wageCompletion = 100 * float(earnedWage)/possibleWage
-        return dict(earned=earnedWage, completion=wageCompletion)
+        return dict(earned=earnedWage, completion=wageCompletion, potential=possibleWage)
 
 class Quiz(models.Model):
     q_id = models.CharField("Quiz ID", max_length=256)
     q_name = models.CharField("Quiz Name", max_length=256)
     q_group = models.ForeignKey("QuizGroup", blank=True, null=True)
     q_category = models.CharField('Category', max_length=8)
-    site = models.CharField("Website", max_length=16, default='tutor')
+    site = models.CharField("Website", max_length=16, default='math')
 
     def get_display_name(self):
         if '_G2_' in self.q_name:
@@ -152,6 +155,9 @@ class Quiz(models.Model):
         else:
             name = False
         return name
+
+    def get_url(self):
+        return "http://ssd.az1.qualtrics.com/SE/?SID={}".format(self.q_id)
 
     def get_results(self, user):
         rs = user.result_set.filter(quiz__q_id=self.q_id)

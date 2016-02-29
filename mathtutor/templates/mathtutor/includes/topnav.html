@@ -15,11 +15,10 @@
             <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
                 <li class="navbar-text">
-                    {% if user.student.theme.abbrv == "NOTHEME" %}
-                        You have not selected a theme
-                    {% else %}
-                        You are {{ user.student.get_theme_info.article }} <span id="navbadge" class="custom-badge">{{ user.student.get_theme_info.description }}</span>
-                    {% endif %}
+                    Earned <span id="navbadge" class="badge">${{ user.student.get_wage_info.earned|floatformat:2 }}</span>
+                </li>
+                <li class="navbar-text">
+                    Potential earnings <span id="navbadge" class="badge">${{ user.student.get_wage_info.potential|floatformat:2 }}</span>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }}<span class="caret"></span></a>
