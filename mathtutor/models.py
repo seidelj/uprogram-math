@@ -8,16 +8,24 @@ from django.utils import timezone
 
 class Constants:
 
+    investment_time = datetime.timedelta(days=8, hours=20)
+
     start_date = {
         '170': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
         '153': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
-        '000': timezone.make_aware(datetime.datetime(2015, 1, 1, 8, 00), timezone.get_current_timezone()),
+        '000': timezone.make_aware(datetime.datetime(2016, 2, 29, 8, 00), timezone.get_current_timezone()),
     }
 
     contracts = [
         {'base': 15, 'marginal': .75},
         {'base': 10, 'marginal': 1.0},
         {'base': 5, 'marginal': 1.25},
+    ]
+
+    parent_forms = [
+        dict(name='address', qid=""),
+        dict(name='english', qid=""),
+        dict(name="spanish", qid=""),
     ]
 
     def accessBools(self, district):
@@ -101,6 +109,23 @@ class Student(models.Model):
     def access_date(self):
         return Constants.start_date[self.district]
 
+    def check_access(self):
+        start = self.access_date()
+        end = start + Constants.investment_time
+        now = timezone.localtime(timezone.now())
+        endBool = now > end
+        partialAccess = start <= now
+        fullAccess = start <=  now and now < end
+        return dict(full=fullAccess, partial=partialAccess, end=end, endBool=endBool)
+
+    def get_remaining_time(self):
+        access_date = self.access_date()
+        end_date = access_date + Constants.investment_time
+        remaining = end_date - timezone.make_aware(datetime.datetime.now())
+        days = int(remaining.days)
+        hours = float(remaining.seconds)/3600
+        return dict(days=days, hours=hours)
+
     def get_quiz_progress(self, cat=None):
         u = User.objects.get(id=self.stuid_id)
         qg = QuizGroup.objects.get(group=str(self.group))
@@ -122,6 +147,19 @@ class Student(models.Model):
             numberOfQuizes=total,
             passed=passed,
         )
+
+        def check_parent_form_completion(self):
+            u = User.objects.get(id=self.stuid_id)
+            rs = u.parentformresult_set.all()
+            results = {}
+            for f in Constants.parent_forms:
+                result = rs.filter(qualtricsId=f['qid']).filter(completeBool=1)
+                if result.count() > 0:
+                    results[f['name']] = True
+                else:
+                    results[f['name']] = False
+            return results
+
 
 
     def get_wage_rate(self):

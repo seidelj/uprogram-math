@@ -1,0 +1,53 @@
+{% extends 'mathtutor/base.html' %}
+
+{% block content %}
+<script>
+$(document).ready(function() {
+	$('#id_username').tooltip();
+	});
+
+$(document).ready(function() {
+		$('.custom-badge').tooltip();
+		});
+</script>
+
+<!-- FOR LIVE SITE UNCOMMENT -->
+<div class="col-md-8 col-md-pull-4">
+{% if not student.check_access.endBool %}
+{% include "mathtutor/includes/accessalert.html" %}
+{% endif %}
+{% if student.check_access.endBool %}
+	{% if user.student.district == "170" or user.student.district == "153" %}
+		<div class="alert alert-info">
+			<p><b>HEADS UP:</b> Still looking to sharpen your math skills? Check out <a href="http://chicagomathtutor.org">ChicagoMathTutor.org</a>!</p>
+		</div>
+	{% endif %}
+<div class="alert alert-notlive">
+	<p>The 10 days of Chicago Math Game have concluded.  Make sure your payment information is up to date by logging in again and following the links.  Additionaly, be sure to have you parents fill out a parent survey.</p>
+	<p>Thanks for playing!</p>
+</div>
+{% else %}
+<div class="alert alert-green">
+    <a href="{% url 'm:dashboard' %}" style="color: white;"><span style="font-weight: bold; font-family: 'Chelsea Market',  cursive; font-size: large;">Continue to Site </span>to start earning!</a>
+</div>
+{% endif %}
+
+<div class="alert btn-info">
+    <a href="#{{ parent_address_form }}" style="color: white; font-weight: bold">CLICK HERE TO VERIFY YOUR PAYMENT INFORMATION</a>{% if student.check_parent_form_completion.address %}<span id="success" style="float:right;" class="custom-badge" data-toggle='tooltip' data-placement="right" data-title="Verified!"><span class="glyphicon glyphicon-thumbs-up" style="font-size:large;" aria-hidden="true"></span></span>{% endif %}
+</div>
+
+{% if student.check_parent_form_completion.address %}
+<div class="alert btn-info">
+	 <p><b>PARENTS: TAKE THE PARENT SURVEY AND ENTER A DRAWING FOR ONE OF 10 GIFT CARDS FOR $200</b></p>
+	<p><a href="#{ parent_survey_english }}" style="color: white; font-weight: bold;">Survey in English</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#{{ parent_survey_spanish }}" style="color: white; font-weight: bold;">Survey in Spanish</a></p>
+{% else %}
+<div class="alert alert-notlive">
+    <a href="#" style="font-weight: bold; color: #949494;" data-container="body" data-toggle="popover" data-placement="top" data-content="">PARENTS: CLICK HERE TO TAKE THE PARENT SURVEY AND ENTER A DRAWING FOR ONE OF 10 GIFT CARDS FOR $200</a>
+    <p style="color: #ff2f2f; font-style: italic"><br>Complete the payment information survey in order to access the parent survey.  If you've completed the payment verification, please allow up to 10 minutes for the site to update.</p>
+{% endif %}
+    <p><br>Parents may enter once for each child that participated in the UChicago Learn and Earn Math Activity.</p>
+    <p>Winnings will be delivered DIRECTLY to parents so <b>the survey must be completed by parents and legal guardians ONLY!</b></p>
+</div>
+</div>
+
+{% endblock %}

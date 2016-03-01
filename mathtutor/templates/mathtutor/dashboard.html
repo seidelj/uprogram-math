@@ -10,22 +10,15 @@
 <div class="row">
 {% endif %}
     <div class="col-sm-4">
-    {% if category.0.available %}
-        <a href="{% url 'm:quiz_or_practice' category.1.key %}" class="Thumb_{{ category.1.key }} thumbnail" {% else %}<span  class="Thumb alert-notlive thumbnail"{% endif %}  style="font-weight: bold;">{{ category.1.name }}
+        <a href="{% url 'm:quiz_or_practice' category.key %}" class="Thumb_{{ category.key }} thumbnail" style="font-weight: bold;">{{ category.name }}
             <hr>
-        {% if category.0.available %}
         <p style="font-weight: normal; line-height: 1em">Quiz Progress</p>
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ category.1.results.testCompletion }}" aria-valuemin="0" aria-valuemax="{{ category.1.results.numberOfQuizes }}" style="width: {{ category.1.results.testCompletion }}%">
-                {{ category.1.results.passed }}
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ category.results.testCompletion }}" aria-valuemin="0" aria-valuemax="{{ category.results.numberOfQuizes }}" style="width: {{ category.results.testCompletion }}%">
+                {{ category.results.passed }}
             </div>
         </div>
-        <p style="font-weight: normal">Total Quizzes <span class="badge">{{ category.1.results.numberOfQuizes }}</span></p>{% if category.0 %}</a>{% else %}</span>{% endif %}
-        {% else %}
-        <p style="color: #ff2f2f; font-style: italic; font-weight:lighter;">This item will be available starting:</p>
-        <p style="color: #ff2f2f;">{{ category.0.date|date:"D, M j" }} at {{ category.0.date|date:"P" }}</p>
-        <div style="height:15px;"></div>
-        {% endif %}
+        <p style="font-weight: normal">Total Quizzes <span class="badge">{{ category.1.results.numberOfQuizes }}</span></p>{% if category %}</a>{% else %}</span>{% endif %}
     </div>
 {% endfor %}
 </div>

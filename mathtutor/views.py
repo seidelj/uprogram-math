@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import auth
@@ -10,10 +10,16 @@ from mathtutor.decorators import check_category_access
 constants = Constants()
 # Create your views here.
 
+def partial_access_check(user):
+    return user.student.check_access()['partial']
+
+def full_access_check(user):
+    return user.student.check_access()['full']
+
 @login_required(login_url='/login/')
 def index(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('m:dashboard'))
+        return HttpResponseRedirect(reverse('m:info'))
     else:
         return render(request, 'login.html',)
 
@@ -38,6 +44,7 @@ def noaccess(request):
         return HttpResponseRedirect(reverse('m:index'))
 
 @login_required
+@user_passes_test(full_access_check, login_url="/noaccess/", redirect_field_name=None)
 def dashboard(request):
     student = request.user.student
     categories = Constants.categories[student.group]
@@ -45,7 +52,7 @@ def dashboard(request):
         c['results']=student.get_quiz_progress(c['key'])
     context = {
         'student': student,
-        'categories': zip(constants.accessBools(student.district), categories),
+        'categories': categories,
         "Constants": Constants,
     }
     return render(request, 'mathtutor/dashboard.html', context)
@@ -54,7 +61,7 @@ def post_surveys(request):
 	pass
 
 @login_required
-@check_category_access
+@user_passes_test(full_access_check, login_url="/noaccess/", redirect_field_name=None)
 def quiz_or_practice(request, category):
     student = request.user.student
     context = {
@@ -65,7 +72,7 @@ def quiz_or_practice(request, category):
     return render(request, 'mathtutor/quiz_or_practice.html', context)
 
 @login_required
-@check_category_access
+@user_passes_test(full_access_check, login_url="/noaccess/", redirect_field_name=None)
 def list_quizes(request, category):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
@@ -86,11 +93,9 @@ def list_quizes(request, category):
     }
     return render(request, "mathtutor/quiz_list.html", context)
 
-def parent_survey(request):
-    pass
 
 @login_required
-@check_category_access
+@user_passes_test(full_access_check, login_url="/noaccess/", redirect_field_name=None)
 def practice(request, category, which, itemId=None):
     student = request.user.student
     quizGroup = QuizGroup.objects.get(group=student.group)
@@ -108,6 +113,18 @@ def practice(request, category, which, itemId=None):
     else:
         context['learnItem'] = LearnItem.objects.get(id=itemId)
         return render(request, "mathtutor/practice_item.html", context)
+
+@login_required
+@user_passes_test(partial_access_check, login_url="/noaccess/", redirect_field_name=None)
+def parent_survey(request):
+    context = {
+        'user': request.user,
+        'student': request.user.student,
+        'parent_address_form': Constants.parent_forms[0]['qid'],
+        'parent_survey_english': Constants.parent_forms[1]['qid'],
+        'parent_survey_spanish': Constants.parent_forms[2]['qid'],
+    }
+    return render_to_response('mathtutor/info.html', context)
 
 def glossary(request, itemId=None):
 	pass
