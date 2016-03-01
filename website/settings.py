@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','')
 DEBUG = int(os.getenv('MYAPP_DEBUG', False))
 
 ALLOWED_HOSTS = [
-    '.chicagomathtutor.org',
+    '.uprogrammath.com',
     '.herokuapp.com',
 ]
 
