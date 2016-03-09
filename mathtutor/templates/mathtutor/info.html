@@ -39,7 +39,7 @@ $(document).ready(function() {
 {% if student.check_parent_form_completion.address %}
 <div class="alert btn-info">
 	 <p><b>PARENTS: TAKE THE PARENT SURVEY AND ENTER A DRAWING FOR ONE OF 10 GIFT CARDS FOR $200</b></p>
-	<p><a href="#{ parent_survey_english }}" style="color: white; font-weight: bold;">Survey in English</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#{{ parent_survey_spanish }}" style="color: white; font-weight: bold;">Survey in Spanish</a></p>
+	<p><a href="{{ parent_survey_english }}" style="color: white; font-weight: bold;">Survey in English</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ parent_survey_spanish }}" style="color: white; font-weight: bold;">Survey in Spanish</a></p>
 {% else %}
 <div class="alert alert-notlive">
     <a href="#" style="font-weight: bold; color: #949494;" data-container="body" data-toggle="popover" data-placement="top" data-content="">PARENTS: CLICK HERE TO TAKE THE PARENT SURVEY AND ENTER A DRAWING FOR ONE OF 10 GIFT CARDS FOR $200</a>
