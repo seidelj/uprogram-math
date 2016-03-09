@@ -24,7 +24,7 @@
             <div class="quizzes-completed">
                 <h5>Quizzes Passed</h5>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress.passed }}" aria-valuemin="0" aria-valuemax="{{ student.get_quiz_progress.numberOfQuizes }}" style="width: {{ student.get_quiz_progress.testCompletion|floatformat:'0' }}%;">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ student.get_quiz_progress.passed }}" aria-valuemin="0" aria-valuemax="{{ student.get_quiz_progress.numberOfQuizes }}" style="width: {{ student.get_quiz_progress.testCompletion|floatformat:'0' }}%;">
                         {{ student.get_quiz_progress.passed }}
                     </div>
                 </div>

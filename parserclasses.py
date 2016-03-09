@@ -149,7 +149,7 @@ class ThreadParentFormParse(ThreadParse):
         qualtricsId = self.get_id(r)
         try:
             data = json.loads(r.text)
-        except ValueError:
+        except AttributeError:
             print "waring error at parsing json"
             return []
         newResults = []
