@@ -29,6 +29,7 @@ DEBUG = int(os.getenv('MYAPP_DEBUG', False))
 ALLOWED_HOSTS = [
     '.uprogrammath.com',
     '.herokuapp.com',
+    '.uprogramlearn.org',
 ]
 
 
