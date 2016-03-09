@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "mathtutor/base.html" %}
 
 {% block content %}
 
@@ -6,7 +6,7 @@
 <!-- END HTML FOR BEFORE LINKS GO LIVE -->
 
 <div class="alert alert-danger">
-{% if end_date_bool %}
+{% if student.check_access.endBool %}
 	<p>The 10 days of Chicago Math Game have concluded.  Make sure your payment information is up to date by logging in again and following the links.  Additionaly, be sure to have you parents fill out a parent survey.</p>
 	<p>Thanks for playing!</p>
 {% else %}

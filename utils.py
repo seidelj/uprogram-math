@@ -1,25 +1,20 @@
 import urllib2
 import os, json
 import website.wsgi
-import datetime
-from mathtutor.models import Result, Constants
-from parserclasses import ResponseParser
+from datetime import datetime, timedelta
+from mathtutor.models import Result, Constants, Quiz, ParentFormResult
+from parserclasses import ThreadParse, ThreadParentFormParse
 from django.utils import timezone
 import requests, grequests
 import Queue
 
 # ADD ADDITIONAL QUERY PARAM FOR SITE
-_API_STRING = os.eniron.get("API_STRING")
+_API_URL = os.getenv("API_URL")
+_USER = os.getenv("USER_ID")
+_TOKEN = os.getenv('TOKEN')
 
-
-def get_response():
-    req = urllib2.Request(URL)
-    req.add_header("Authorization", "Token {}".format(os.environ.get("MATHGAME_TOKEN")))
-    response = urllib2.urlopen(req)
-    if response.code == 200:
-        return response
-    else:
-        return False
+API_STRING = _API_URL + "API_SELECT=ControlPanel&Version=2.5&Request=getLegacyResponseData&User=" + _USER
+API_STRING = API_STRING + "&Token=" + _TOKEN + "&Format=JSON&SurveyID="
 
 def split_seq_by_length(seq, length):
     newseq = [seq[x:x+length] for x in xrange(0, len(seq), length)]
@@ -37,7 +32,7 @@ def async_request(routines=6):
     print ("{}: begin".format(str(datetime.now())))
     api_urls = []
     for q in Quiz.objects.filter(q_group__group=25):
-        u = "{}{}{}".format(_API_STRING, q.q_id, StartDate)
+        u = "{}{}{}".format(API_STRING, q.q_id, StartDate)
         api_urls.append(u)
     print len(api_urls)
     urlList = split_seq_by_length(api_urls, routines)
@@ -69,17 +64,17 @@ def qual_update_script():
 
     print "{} new results".format(len(data))
 
-    Results.objects.bulk_create(data)
+    Result.objects.bulk_create(data)
     print "{}: Finished parsing qualtrics data".format(str(datetime.now()))
 
-def get_parent_forms_results():
+def get_parent_form_results():
     urls = []
     for f in Constants.parent_forms:
-        url = "{}{}".format(_API_STRING, f['qid'])
+        url = "{}{}".format(API_STRING, f['qid'])
         urls.append(url)
     rs = (grequests.get(url, hooks={'response': get_exceptions}) for url in urls)
     qualtricsData = grequests.map(rs)
-    print "{}: Finished collecting parent form information from Qualtrics API".format(str(datatime.now()))
+    print "{}: Finished collecting parent form information from Qualtrics API".format(str(datetime.now()))
 
     parseQueue = Queue.Queue()
     data = []
@@ -92,28 +87,13 @@ def get_parent_forms_results():
         parseQueue.put(item)
 
     parseQueue.join()
-    ParentFormResults.objects.bulk_create(data)
+    ParentFormResult.objects.bulk_create(data)
     print "{}: Finished parsing parent form results data".format(str(datetime.now()))
 
 
 def main():
-    print "Begin: {}".format(datetime.datetime.now())
-    response = get_response()
-    if not response:
-        print "Response was not 200"
-    else:
-        blkUpdateList = []
-        parser = ResponseParser()
-        data = json.loads(response.read())
-        for item in data['results']:
-            created, obj = parser.parse_response(item)
-            if not created:
-                pass
-            else:
-                blkUpdateList.append(obj)
-        Result.objects.bulk_create(blkUpdateList)
-    print "Finished updating results: {}".format(datetime.datetime.now())
-
+    qual_update_script()
+    get_parent_form_results()
 
 if __name__ == "__main__":
     main()

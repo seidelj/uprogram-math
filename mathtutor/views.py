@@ -39,7 +39,7 @@ def noaccess(request):
             'tooSoon': True,
             "Constants": Constants,
         }
-        return render(request, "registration/noaccess.html", context)
+        return render(request, "mathtutor/registration/noaccess.html", context)
     else:
         return HttpResponseRedirect(reverse('m:index'))
 
