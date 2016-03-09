@@ -28,7 +28,7 @@ def get_exceptions(response, **kwargs):
 
 def async_request(routines=6):
     startDate = timezone.make_aware(datetime.now()-timedelta(hours=8))
-    StartDate = "&StartDate={}".format(startDate.strftime("%Y-%m-%d %H:%M%S"))
+    StartDate = "&StartDate={}".format(startDate.strftime("%Y-%m-%d %H:%M:%S"))
     print ("{}: begin".format(str(datetime.now())))
     api_urls = []
     for q in Quiz.objects.filter(q_group__group=25):
