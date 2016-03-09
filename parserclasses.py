@@ -111,7 +111,7 @@ class ThreadParse(threading.Thread):
                 pass
             else:
                 continue
-            score = self.get_score(item, data)
+            usr = self.get_usr(data, item)
             if not usr:
                 continue
             score = self.get_score(item,data)
