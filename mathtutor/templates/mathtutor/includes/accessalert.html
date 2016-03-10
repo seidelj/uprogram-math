@@ -1,7 +1,7 @@
 <div class="alert alert-gray alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <p style="color: #ff2f2f; font-style: italic; font-size:15px;">You will have access to this site from {{ user.student.access_date }} to {{ end_date }}</p>
+        <p style="color: #ff2f2f; font-style: italic; font-size:15px;">You will have access to this site from {{ user.student.access_date }} to {{ user.student.get_remaining_time.end_date }}</p>
         {% with time=user.student.get_remaining_time %}
-        <p><strong>YOU HAVE: {{ time.days }} day{{ time.days|pluralize }} and {{ time.hours|floatformat:"0" }} hour{{ time.hours|pluralize }} left on the website!!!</strong></p>
+        <p><strong>YOU HAVE: {{ time.nights }} night{{ time.nights|pluralize }} left on the website!!!</strong></p>
         {% endwith %}
 </div>

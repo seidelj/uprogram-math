@@ -3,7 +3,7 @@ import website.wsgi
 from django.core.exceptions import ObjectDoesNotExist
 import threading
 from codecs import encode
-from mathtutor.models import Result, User, Quiz
+from mathtutor.models import Result, User, Quiz, ParentFormResult
 
 class ResponseParser:
 
@@ -134,22 +134,22 @@ class ThreadParentFormParse(ThreadParse):
     def get_usr(self, data, rid):
         try:
             temp_name = encode(data[rid]["UserID"])
-            uname = temp_uname.replace("Doe, ", "")
+            uname = temp_name.replace("Doe, ", "")
         except KeyError:
             usr = False
         else:
             try:
-                user = User.objects.get(username=uname)
+                usr = User.objects.get(username=uname)
             except ObjectDoesNotExist:
-                user = False
+                usr = False
         finally:
-            return user
+            return usr
 
     def build_data_dict(self, r):
         qualtricsId = self.get_id(r)
         try:
             data = json.loads(r.text)
-        except AttributeError:
+        except ValueError:
             print "waring error at parsing json"
             return []
         newResults = []
@@ -165,9 +165,9 @@ class ThreadParentFormParse(ThreadParse):
                 continue
             new_r = ParentFormResult(
                 completeBool = int(data[item]['Finished']),
-                student_id = user.id,
+                student_id = usr.id,
                 response_id = item,
-                quatricsId = qualtricsId,
+                qualtrics_id = qualtricsId,
             )
             newResults.append(new_r)
         return newResults

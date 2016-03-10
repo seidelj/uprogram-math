@@ -8,7 +8,8 @@ from django.utils import timezone
 
 class Constants:
 
-    investment_time = datetime.timedelta(days=8, hours=20)
+
+    investment_time = datetime.timedelta(9, 28740)
 
     start_date = {
         '170': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
@@ -125,7 +126,7 @@ class Student(models.Model):
         remaining = end_date - timezone.make_aware(datetime.datetime.now())
         days = int(remaining.days)
         hours = float(remaining.seconds)/3600
-        return dict(days=days, hours=hours)
+        return dict(nights=days+1, days=days, hours=hours, end_date=end_date)
 
     def get_quiz_progress(self, cat=None):
         u = User.objects.get(id=self.stuid_id)
