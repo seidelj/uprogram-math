@@ -33,7 +33,7 @@ $(document).ready(function() {
 {% endif %}
 
 <div class="alert btn-info">
-    <a href="#{{ parent_address_form }}" style="color: white; font-weight: bold">CLICK HERE TO VERIFY YOUR PAYMENT INFORMATION</a>{% if student.check_parent_form_completion.address %}<span id="success" style="float:right;" class="custom-badge" data-toggle='tooltip' data-placement="right" data-title="Verified!"><span class="glyphicon glyphicon-thumbs-up" style="font-size:large;" aria-hidden="true"></span></span>{% endif %}
+    <a href="{{ parent_address_form }}" style="color: white; font-weight: bold">CLICK HERE TO VERIFY YOUR PAYMENT INFORMATION</a>{% if student.check_parent_form_completion.address %}<span id="success" style="float:right;" class="custom-badge" data-toggle='tooltip' data-placement="right" data-title="Verified!"><span class="glyphicon glyphicon-thumbs-up" style="font-size:large;" aria-hidden="true"></span></span>{% endif %}
 </div>
 
 {% if student.check_parent_form_completion.address %}

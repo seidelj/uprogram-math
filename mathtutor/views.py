@@ -117,12 +117,13 @@ def practice(request, category, which, itemId=None):
 @login_required
 @user_passes_test(partial_access_check, login_url="/noaccess/", redirect_field_name=None)
 def parent_survey(request):
+    url = "http://ssd.az1.qualtrics.com/SE/?SID="
     context = {
         'user': request.user,
         'student': request.user.student,
-        'parent_address_form': Constants.parent_forms[0]['qid'],
-        'parent_survey_english': Constants.parent_forms[1]['qid'],
-        'parent_survey_spanish': Constants.parent_forms[2]['qid'],
+        'parent_address_form': url + Constants.parent_forms[0]['qid'],
+        'parent_survey_english': url + Constants.parent_forms[1]['qid'],
+        'parent_survey_spanish': url + Constants.parent_forms[2]['qid'],
     }
     return render_to_response('mathtutor/info.html', context)
 
