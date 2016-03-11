@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.models import User, Student
+from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as OriginalUserAdmin
 from mathtutor.models import Student
 
@@ -18,7 +18,7 @@ class StudentAdmin(admin.ModelAdmin):
     def get_username(self, obj):
         return obj.stuid.username
     def quizzes_passed(self, obj):
-        return obj.get_quiz_info()['passed']
+        return obj.get_quiz_progress()['passed']
 
 admin.site.register(Student, StudentAdmin)
 
