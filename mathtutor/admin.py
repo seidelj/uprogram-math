@@ -11,6 +11,15 @@ class StudentInline(admin.TabularInline):
 class UserAdmin(OriginalUserAdmin):
     inlines = [StudentInline,]
 
+class StudentAdmin(admin.ModelAdmin):
+    readonly_fields = ('get_username', "quizzes_passed")
+    list_display = ('stuid', 'quizzes_passed')
+    search_fields = ['stuid__username']
+    def get_username(self, obj):
+        return obj.stuid.username
+    def quizzes_passed(self, obj):
+        return obj.get_quiz_info()['passed']
+
 try:
     admin.site.unregister(User)
 finally:
