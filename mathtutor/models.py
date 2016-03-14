@@ -9,7 +9,7 @@ from django.utils import timezone
 class Constants:
 
 
-    investment_time = datetime.timedelta(9, 28740)
+    investment_time = datetime.timedelta(days=9, hours=6, minutes=59)
 
     start_date = {
         '170': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
