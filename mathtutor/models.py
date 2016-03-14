@@ -150,17 +150,17 @@ class Student(models.Model):
             passed=passed,
         )
 
-        def check_parent_form_completion(self):
-            u = User.objects.get(id=self.stuid_id)
-            rs = u.parentformresult_set.all()
-            results = {}
-            for f in Constants.parent_forms:
-                result = rs.filter(qualtricsId=f['qid']).filter(completeBool=1)
-                if result.count() > 0:
-                    results[f['name']] = True
-                else:
-                    results[f['name']] = False
-            return results
+    def check_parent_form_completion(self):
+        u = User.objects.get(id=self.stuid_id)
+        rs = u.parentformresult_set.all()
+        results = {}
+        for f in Constants.parent_forms:
+            result = rs.filter(qualtrics_id=f['qid']).filter(completeBool=1)
+            if result.count() > 0:
+                results[f['name']] = True
+            else:
+                results[f['name']] = False
+        return results
 
 
 
