@@ -146,6 +146,8 @@ class ThreadParentFormParse(ThreadParse):
             return usr
 
     def build_data_dict(self, r):
+        if not r:
+            return []
         qualtricsId = self.get_id(r)
         try:
             data = json.loads(r.text)
