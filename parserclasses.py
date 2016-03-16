@@ -78,6 +78,10 @@ class ThreadParse(threading.Thread):
             try:
                 usr = User.objects.get(username=uname)
             except ObjectDoesNotExist:
+                uname = uname.replace("new","")
+                usr = User.objects.get(username=uname)
+                print "Found {}".format(uname + "new")
+            except ObjectDoesNotExist:
                 usr = False
         finally:
             return usr
@@ -113,6 +117,7 @@ class ThreadParse(threading.Thread):
                 continue
             usr = self.get_usr(data, item)
             if not usr:
+                print "skipped"
                 continue
             score = self.get_score(item,data)
             finished = data[item]['Finished']
