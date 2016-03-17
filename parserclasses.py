@@ -78,7 +78,7 @@ class ThreadParse(threading.Thread):
             try:
                 usr = User.objects.get(username=uname)
             except ObjectDoesNotExist:
-                uname = uname.replace("new","")
+                uname = uname[:-3]
                 usr = User.objects.get(username=uname)
                 print "Found {}".format(uname + "new")
             except ObjectDoesNotExist:
