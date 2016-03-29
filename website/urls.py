@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-	url(r'', include('mathtutor.urls', namespace='m'))
+	url(r'', include('mathtutor.urls', namespace='m')),
+    url(r'', include('rest_api.urls'))
 ]

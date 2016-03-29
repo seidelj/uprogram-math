@@ -1,11 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.authtokens.models import Token
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 class Command(BaseCommand):
 
-    def add_argument(self, parser):
+    def add_arguments(self, parser):
         parser.add_argument('username', nargs="+", type=str)
 
     def handle(self, *args, **options):

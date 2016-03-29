@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'mathtutor',
     'request',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_api',
 )
 
 REST_FRAMEWORK = {

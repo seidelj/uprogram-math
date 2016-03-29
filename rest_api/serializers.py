@@ -2,17 +2,17 @@ from rest_framework import serializers
 from mathtutor.models import Result
 from django.contrib.auth.models import User
 
-class ResultsSerializer(serializers.HyperlinkedModelSerializer):
+class ResultSerializer(serializers.HyperlinkedModelSerializer):
     name = serializers.ReadOnlyField(source="name.username")
-    quiz = serializers.ReadonOnlyField(source="quiz.q_id")
+    quiz = serializers.ReadOnlyField(source="quiz.q_id")
 
     class Meta:
         model = Result
         fields = ('name', 'response_id', 'score', 'finished', 'quiz')
 
 
-class UserSerializer(serializers.HyperLinkModelSerializer):
-    result_set = serializers.HyperLinkedRelatedField(many=True, queryset=Results.objects.all(), view_name='result-detail')
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    result_set = serializers.HyperlinkedRelatedField(many=True, queryset=Result.objects.all(), view_name='result-detail')
 
     class Meta:
         model = User

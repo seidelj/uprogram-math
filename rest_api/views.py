@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import permissions, serializers
 from mathtutor.models import Result
 from rest_api.serializers import ResultSerializer, UserSerializer
-from djano.contrib.auth.models import User
+from django.contrib.auth.models import User
 import datetime
 from rest_api.permissions import IsSSL
 
@@ -28,3 +28,8 @@ class ResultViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = Result.objects.filter(site=site)
 
         return queryset
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsSSL, permissions.IsAuthenticated,)
