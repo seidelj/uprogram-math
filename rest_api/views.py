@@ -20,9 +20,9 @@ class ResultViewSet(viewsets.ReadOnlyModelViewSet):
         site = self.request.query_params.get('site', None)
         if getAllResults and not site:
             queryset = Result.objects.all()
-        elif not getAllResult and site:
+        elif not getAllResults and site:
             queryset = Result.objects.filter(timestamp__gte=timestamp).filter(quiz__site=site)
-        elif not getAllResult and not site:
+        elif not getAllResults and not site:
             queryset = Result.objects.filter(timestamp__gte=timestamp)
         else:
             queryset = Result.objects.filter(site=site)
