@@ -120,6 +120,10 @@ DATABASES['default']= dj_database_url.config(default='postgres://postgres:joseph
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_HOST = "uprogram-math.herokuapp.com"
+
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 

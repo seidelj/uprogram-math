@@ -5,7 +5,7 @@ from rest_api import views
 SECURE_SSL_REDIRECT=True
 
 router = routers.DefaultRouter()
-router.register(r'results', views.ResultViewSet, base_name="results-list")
+router.register(r'results', views.ResultViewSet, base_name="result-list")
 router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
