@@ -235,12 +235,16 @@ class QuizGroup(models.Model):
     group = models.CharField('Group', max_length=8)
 
 
+def get_now():
+    return timezone.now()
+
 class Result(models.Model):
     name = models.ForeignKey(User, blank=True, null=True)
     response_id = models.CharField("Response ID", max_length=256)
     score = models.CharField('Score', max_length=16)
     finished = models.CharField("Finished", max_length=8)
     quiz = models.ForeignKey(Quiz, blank=True, null=True)
+    timestamp = models.DateTimeField("Time Added", default=get_now)
 
 class LearnType(models.Model):
     name = models.CharField("Type", max_length=8)
