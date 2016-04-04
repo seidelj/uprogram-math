@@ -3,6 +3,7 @@ dj-database-url==0.3.0
 Django==1.8.4
 django-postgrespool==0.3.0
 django-request==1.4.0
+djangorestframework==3.3.3
 futures==3.0.3
 gevent==1.0.2
 greenlet==0.4.9
