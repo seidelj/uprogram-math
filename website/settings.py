@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     '.uprogrammath.com',
     '.herokuapp.com',
     '.uprogramlearn.org',
+    '*'
 ]
 
 
@@ -55,6 +56,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ('rest_framework.authentication.TokenAuthentication',),
 }
 
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
