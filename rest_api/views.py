@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions, serializers
 from mathtutor.models import Result, ParentFormResult
-from rest_api.serializers import ResultSerializer, UserSerializer
+from rest_api.serializers import ResultSerializer, UserSerializer, ParentFormSerializer
 from django.contrib.auth.models import User
 import datetime
 from rest_api.permissions import IsSSL
@@ -36,5 +36,5 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ParentFormViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ParentFormResult.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = ParentFormSerializer
     permission_classes = (IsSSL, permissions.IsAuthenticated,)
