@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions, serializers
-from mathtutor.models import Result
+from mathtutor.models import Result, ParentFormResult
 from rest_api.serializers import ResultSerializer, UserSerializer
 from django.contrib.auth.models import User
 import datetime
@@ -31,5 +31,10 @@ class ResultViewSet(viewsets.ReadOnlyModelViewSet):
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsSSL, permissions.IsAuthenticated,)
+
+class ParentFormViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ParentFormResult.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSSL, permissions.IsAuthenticated,)

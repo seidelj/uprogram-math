@@ -7,6 +7,7 @@ SECURE_SSL_REDIRECT=True
 router = routers.DefaultRouter()
 router.register(r'results', views.ResultViewSet, base_name="result-list")
 router.register(r'users', views.UserViewSet)
+router.register(r'parentforms', views.ParentFormViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

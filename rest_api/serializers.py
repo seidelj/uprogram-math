@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from mathtutor.models import Result
+from mathtutor.models import Result, ParentFormResult
 from django.contrib.auth.models import User
 
 class ResultSerializer(serializers.HyperlinkedModelSerializer):
@@ -17,3 +17,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'result_set')
+
+class ParentFormSerializer(serializers.HyperlinkedModelSerializer):
+    name = serializers.ReadOnlyField(source="student.username")
+
+    class Meta:
+        model = ParentFormResult
+        fields = ('student', 'response_id', 'completeBool', 'qualtrics_id')
