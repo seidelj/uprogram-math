@@ -19,7 +19,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'username', 'result_set')
 
 class ParentFormSerializer(serializers.HyperlinkedModelSerializer):
-
+    username = serializers.ReadOnlyField(source="student.username")
     class Meta:
         model = ParentFormResult
-        fields = ('student', 'response_id', 'completeBool', 'qualtrics_id')
+        fields = ('username', 'response_id', 'completeBool', 'qualtrics_id')
