@@ -69,6 +69,7 @@ class ThreadParse(threading.Thread):
             return q_id
 
     def get_usr(self, data, rid):
+        usr = False
         try:
             temp_uname = encode(data[rid]["Name"])
             uname = temp_uname.replace("Doe, ", "")

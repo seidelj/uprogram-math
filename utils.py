@@ -32,8 +32,8 @@ def async_request(routines=6):
     print ("{}: begin".format(str(datetime.now())))
     api_urls = []
     for q in Quiz.objects.filter(q_group__group=25):
-        u = "{}{}{}".format(API_STRING, q.q_id, StartDate)
-        #u = "{}{}".format(API_STRING, q.q_id)
+       #u = "{}{}{}".format(API_STRING, q.q_id, StartDate)
+        u = "{}{}".format(API_STRING, q.q_id)
         api_urls.append(u)
     print len(api_urls)
     urlList = split_seq_by_length(api_urls, routines)
