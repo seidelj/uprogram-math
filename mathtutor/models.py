@@ -14,14 +14,15 @@ class Constants:
     start_date = {
         '170': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
         '153': timezone.make_aware(datetime.datetime(2015, 10, 15, 8, 00), timezone.get_current_timezone()),
-        '000': timezone.make_aware(datetime.datetime(2016, 3, 8, 16, 00), timezone.get_current_timezone()),
-        '152': timezone.make_aware(datetime.datetime(2016, 3, 9, 16, 00), timezone.get_current_timezone()),
+        '000': timezone.make_aware(datetime.datetime(2016, 10, 10, 16, 00), timezone.get_current_timezone()),
+        '152': timezone.make_aware(datetime.datetime(2016, 10, 13, 16, 00), timezone.get_current_timezone()),
     }
 
     contracts = [
         {'base': 15, 'marginal': .75},
         {'base': 10, 'marginal': 1.0},
         {'base': 5, 'marginal': 1.25},
+        {'base': 10, 'marginal': 1.50},
     ]
 
     parent_forms = [
