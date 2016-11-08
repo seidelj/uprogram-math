@@ -18,7 +18,7 @@ class Command(BaseCommand):
 			next(mycsv, None) # Skip the headers
 			for row in mycsv:
 
-				usr, created = User.objects.get_or_create(username=str(row[0]).replace(" ",""))
+				usr, created = User.objects.get_or_create(username=row[0])
 				usr.set_password("%s" % row[1])
 				usr.save()
 				stu, created = Student.objects.get_or_create(stuid=usr)
