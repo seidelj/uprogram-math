@@ -24,7 +24,7 @@ def main():
     with open(csvFile, 'w') as f:
         writer = csv.writer(f, csv.excel)
         write_headers(writer)
-        for student in Student.objects.filter(district="152b")
+        for student in Student.objects.filter(district="152cp"):
             writer.writerow(build_row(student))
 
 
