@@ -19,7 +19,10 @@ class Constants:
         '152cp': timezone.make_aware(datetime.datetime(2016, 10, 27, 16, 00), timezone.get_current_timezone()),
         '152cm': timezone.make_aware(datetime.datetime(2016, 10, 28, 16, 00), timezone.get_current_timezone()),
         '152b2': timezone.make_aware(datetime.datetime(2016, 12, 8, 16, 00), timezone.get_current_timezone()),
+        '152cm2': timezone.make_aware(datetime.datetime(2017, 1, 11, 16, 00), timezone.get_current_timezone()),
+        '152cp2': timezone.make_aware(datetime.datetime(2017, 1, 12, 16, 00), timezone.get_current_timezone()),
     }
+
 
     contracts = [
         {'base': 15, 'marginal': .75},
