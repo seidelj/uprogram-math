@@ -21,6 +21,9 @@ class Constants:
         '152b2': timezone.make_aware(datetime.datetime(2016, 12, 8, 16, 00), timezone.get_current_timezone()),
         '152cm2': timezone.make_aware(datetime.datetime(2017, 1, 11, 16, 00), timezone.get_current_timezone()),
         '152cp2': timezone.make_aware(datetime.datetime(2017, 1, 12, 16, 00), timezone.get_current_timezone()),
+        '152b3':  timezone.make_aware(datetime.datetime(2017, 3, 7, 16, 00), timezone.get_current_timezone()),
+        '152cp3': timezone.make_aware(datetime.datetime(2017, 3, 28, 16, 00), timezone.get_current_timezone()),
+        '152cm3': timezone.make_aware(datetime.datetime(2017, 4, 5, 16, 00), timezone.get_current_timezone()),
     }
 
 
