@@ -27,7 +27,7 @@ def get_exceptions(response, **kwargs):
         sys.exit("Response is not 200: {}; Q_ID: {}".format(response.text, response.url))
 
 def async_request(routines=6):
-    startDate = timezone.make_aware(datetime.now()-timedelta(hours=8))
+    startDate = timezone.make_aware(datetime.now()-timedelta(hours=64))
     StartDate = "&StartDate={}".format(startDate.strftime("%Y-%m-%d %H:%M:%S"))
     print ("{}: begin".format(str(datetime.now())))
     api_urls = []
